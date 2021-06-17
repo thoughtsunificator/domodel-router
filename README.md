@@ -1,4 +1,4 @@
-# domodel-router
+# domodel-router [![Build Status](https://travis-ci.com/thoughtsunificator/domodel-router.svg?branch=master)](https://travis-ci.com/thoughtsunificator/domodel-router)
 
 URL routing system for [domodel](https://github.com/thoughtsunificator/domodel).
 
