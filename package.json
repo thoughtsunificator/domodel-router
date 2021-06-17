@@ -1,0 +1,31 @@
+{
+	"name": "@domodel/router",
+	"type": "module",
+	"description": "Router system for domodel",
+	"version": "1.0.0",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/thoughtsunificator/domodel-router.git"
+	},
+	"bugs": {
+		"url": "https://github.com/thoughtsunificator/domodel-router/issues"
+	},
+	"author": "Romain Lebesle <oss@thoughtsunificator.me> (https://thoughtsunificator.me)",
+	"license": "MIT",
+	"devDependencies": {
+		"docdash": "^1.2.0",
+		"eslint": "^7.28.0",
+		"jsdoc": "^3.6.7",
+		"jsdom": "^16.6.0",
+		"nodeunit-esm": "^1.0.2"
+	},
+	"scripts": {
+		"test": "nodeunit-esm",
+		"generate-docs": "jsdoc --configure .jsdoc.json --verbose",
+		"lint": "eslint src/**/*.js"
+	},
+	"dependencies": {
+		"domodel": "^1.0.5",
+		"route-tokenizer": "^0.0.1"
+	}
+}
