@@ -1,5 +1,3 @@
-import { Binding } from "domodel"
-
 import Link from "../src/object/link.js"
 
 export function instance(test) {
