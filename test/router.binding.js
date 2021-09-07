@@ -1,13 +1,8 @@
 import { JSDOM } from "jsdom"
 import { Core, Binding } from "domodel"
 
-import RouterModel from "../src/model/router.js"
+import { RouterModel, RouterBinding, Router, Route, Link }  from "../index.js"
 
-import RouterBinding from "../src/model/router.binding.js"
-
-import Router from "../src/object/router.js"
-import Route from "../src/object/route.js"
-import Link from "../src/object/link.js"
 import View from "../src/object/view.js"
 
 const url = "https://localhost/"

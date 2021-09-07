@@ -1,4 +1,4 @@
-import Link from "../src/object/link.js"
+import { Link } from "../index.js"
 
 export function instance(test) {
 	test.expect(4)

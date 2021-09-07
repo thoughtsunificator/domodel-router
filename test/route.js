@@ -1,6 +1,6 @@
 import { Binding } from "domodel"
 
-import Route from "../src/object/route.js"
+import { Route } from "../index.js"
 
 export function instance(test) {
 	test.expect(4)

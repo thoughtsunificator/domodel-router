@@ -1,7 +1,6 @@
 import { Binding, Observable } from "domodel"
 
-import Router from "../src/object/router.js"
-import Route from "../src/object/route.js"
+import { Router, Route } from "../index.js"
 
 const url = "https://localhost/"
 
