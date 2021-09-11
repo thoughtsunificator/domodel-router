@@ -3,6 +3,7 @@
 	"type": "module",
 	"description": "Router system for domodel",
 	"version": "1.0.2",
+	"main": "index.js",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/thoughtsunificator/domodel-router.git"
