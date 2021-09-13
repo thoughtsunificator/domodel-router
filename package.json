@@ -26,7 +26,7 @@
 		"lint": "eslint src/**/*.js"
 	},
 	"dependencies": {
-		"domodel": "^1.0.5",
-		"route-tokenizer": "^0.0.1"
+		"@thoughtsunificator/route-tokenizer": "^0.0.3",
+		"domodel": "^1.0.5"
 	}
 }

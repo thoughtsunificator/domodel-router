@@ -1,7 +1,7 @@
 /** @module router */
 
 import { Observable } from "domodel"
-import { Tokenizer, Token } from "route-tokenizer"
+import { Tokenizer, Token } from "@thoughtsunificator/route-tokenizer"
 
 /**
  * @memberof: module:router
