@@ -1,8 +1,3 @@
-/** @module link */
-
-/**
- * @memberof: module:link
- */
 class Link {
 
 	/**

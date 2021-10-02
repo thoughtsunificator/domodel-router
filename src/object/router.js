@@ -1,16 +1,13 @@
-/** @module router */
-
 import { Observable } from "domodel"
 import { Tokenizer, Token } from "@thoughtsunificator/route-tokenizer"
 
-/**
- * @memberof: module:router
- */
 class Router extends Observable {
 
 	/**
-	 * @typedef {string} RouterType
-	 * @type {RouterType}
+	 * @property RouterType {RouterType}
+	 * @property RouterType.VIRTUAL {string}
+	 * @property RouterType.PATHNAME {string}
+	 * @property RouterType.HASH {string}
 	 */
 	static TYPE = {
 		VIRTUAL: "VIRTUAL",

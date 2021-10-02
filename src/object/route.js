@@ -1,10 +1,5 @@
-/** @module route */
-
 import { Binding } from "domodel"
 
-/**
- * @memberof: module:route
- */
 class Route {
 
 	/**

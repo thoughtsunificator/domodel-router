@@ -1,10 +1,5 @@
-/** @module view */
-
 import { Observable } from "domodel"
 
-/**
- * @memberof: module:view
- */
 class View extends Observable {
 
 	/**
