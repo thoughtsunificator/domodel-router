@@ -1,8 +1,11 @@
+/**
+ * @global
+ */
 class Link {
 
 	/**
 	 * @param {string} path
-	 * @param {object} properties
+	 * @param {object} [properties={}]
 	 */
 	constructor(path, properties = {}) {
 		this._path = path
@@ -10,6 +13,7 @@ class Link {
 	}
 
 	/**
+	 * @readonly
 	 * @type {string}
 	 */
 	get path() {
@@ -17,6 +21,7 @@ class Link {
 	}
 
 	/**
+	 * @readonly
 	 * @type {object}
 	 */
 	get properties() {

@@ -1,4 +1,3 @@
-export default data => ({
-	tagName: "a",
-	...data
-})
+export default {
+	tagName: "a"
+}

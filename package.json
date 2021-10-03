@@ -27,6 +27,6 @@
 	},
 	"dependencies": {
 		"@thoughtsunificator/route-tokenizer": "^0.0.3",
-		"domodel": "^1.0.5"
+		"domodel": "^1.0.31"
 	}
 }

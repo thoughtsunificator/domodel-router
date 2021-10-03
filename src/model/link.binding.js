@@ -2,7 +2,19 @@ import { Binding } from "domodel"
 
 import Router from "../object/router.js"
 
-export default class extends Binding {
+/**
+ * @global
+ */
+class LinkBinding extends Binding {
+
+	/**
+	 * @param {object} properties
+	 * @param {Router} properties.link
+	 * @param {Link} properties.router
+	 */
+	constructor(properties) {
+		super(properties)
+	}
 
 	onCreated() {
 
@@ -26,3 +38,4 @@ export default class extends Binding {
 
 }
 
+export default LinkBinding

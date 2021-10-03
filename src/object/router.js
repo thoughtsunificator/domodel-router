@@ -1,6 +1,9 @@
 import { Observable } from "domodel"
 import { Tokenizer, Token } from "@thoughtsunificator/route-tokenizer"
 
+/**
+ * @global
+ */
 class Router extends Observable {
 
 	/**
@@ -66,6 +69,7 @@ class Router extends Observable {
 	}
 
 	/**
+	 * @readonly
 	 * @type {Route[]}
 	 */
 	get routes() {
@@ -73,6 +77,7 @@ class Router extends Observable {
 	}
 
 	/**
+	 * @readonly
 	 * @type {RouterType}
 	 */
 	get type() {
@@ -80,6 +85,7 @@ class Router extends Observable {
 	}
 
 	/**
+	 * @readonly
 	 * @type {Route}
 	 */
 	get errorRoute() {
@@ -87,6 +93,7 @@ class Router extends Observable {
 	}
 
 	/**
+	 * @readonly
 	 * @type {string}
 	 */
 	get initialPath() {

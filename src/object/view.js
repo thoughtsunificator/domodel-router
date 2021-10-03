@@ -1,10 +1,13 @@
 import { Observable } from "domodel"
 
+/**
+ * @global
+ */
 class View extends Observable {
 
 	/**
 	 * @param {Binding} binding
-	 * @param {object} parameters
+	 * @param {object} [parameters={}]
 	 */
 	constructor(binding, parameters = {}) {
 		super()
@@ -13,6 +16,7 @@ class View extends Observable {
 	}
 
 	/**
+	 * @readonly
 	 * @type {object}
 	 */
 	get parameters() {

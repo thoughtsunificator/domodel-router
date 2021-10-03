@@ -3,11 +3,20 @@ import { Core, Binding } from "domodel"
 import Router from "../object/router.js"
 import View from "../object/view.js"
 import Link from "../object/link.js"
+import RouterEventListener from "./router.event.js"
 
 /**
- * @memberof: module:router
+ * @global
  */
 class RouterBinding extends Binding {
+
+	/**
+	 * @param {object} properties
+	 * @param {Router} properties.router
+	 */
+	constructor(properties) {
+		super(properties, new RouterEventListener(properties.router))
+	}
 
 	onCreated() {
 

@@ -1,5 +1,8 @@
 import { Binding } from "domodel"
 
+/**
+ * @global
+ */
 class Route {
 
 	/**
@@ -14,6 +17,7 @@ class Route {
 	}
 
 	/**
+	 * @readonly
 	 * @type {string}
 	 */
 	get match() {
@@ -21,6 +25,7 @@ class Route {
 	}
 
 	/**
+	 * @readonly
 	 * @type {object}
 	 */
 	get model() {
@@ -28,6 +33,7 @@ class Route {
 	}
 
 	/**
+	 * @readonly
 	 * @type {Binding}
 	 */
 	get binding() {
