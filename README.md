@@ -1,4 +1,4 @@
-# domodel-router ![test-workflow](https://github.com/thoughtsunificator/domodel-router/actions/workflows/test.yml/badge.svg)
+# domodel-router
 
 URL routing system for [domodel](https://github.com/thoughtsunificator/domodel).
 
