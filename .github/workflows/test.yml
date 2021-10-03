@@ -3,8 +3,8 @@ name: "test"
 on: [push, pull_request]
 
 jobs:
-  tagged-release:
-    name: "Tagged Release"
+  test:
+    name: "Unit tests"
     runs-on: "ubuntu-latest"
 
     steps:
