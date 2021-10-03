@@ -1,4 +1,4 @@
-name: "tagged-release"
+name: "release"
 
 on:
   push:
@@ -14,10 +14,10 @@ jobs:
       - name: git-checkout
         uses: actions/checkout@v2
 
-      - name: Install all dependencies
-        run: npm install
+      - name: npm ci
+        run: npm ci
 
-      - name: Test
+      - name: npm test
         run: npm test
 
       - name: Automatic release
