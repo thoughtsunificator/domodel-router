@@ -1,4 +1,4 @@
-# domodel-router [![Build Status](https://travis-ci.com/thoughtsunificator/domodel-router.svg?branch=master)](https://travis-ci.com/thoughtsunificator/domodel-router)
+# domodel-router ![release-workflow](https://github.com/thoughtsunificator/domodel-router/actions/workflows/release.yml/badge.svg)
 
 URL routing system for [domodel](https://github.com/thoughtsunificator/domodel).
 
