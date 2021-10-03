@@ -34,7 +34,7 @@ jobs:
         env:
           REPO: self
           BRANCH: gh-pages
-          FOLDER: gh-pages
+          FOLDER: docs
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Publish to npm
