@@ -1,6 +1,6 @@
 import assert from "assert"
 import { JSDOM } from "jsdom"
-import { Core, Binding } from "domodel"
+import { Core, Binding, EventListener } from "domodel"
 
 import { RouterModel, RouterBinding, Router, Route, Link }  from "../index.js"
 
@@ -28,7 +28,7 @@ describe("router.binding", () => {
 	})
 
 	it("instance", () => {
-		assert.ok(new RouterBinding() instanceof Binding)
+		assert.ok(new RouterBinding({ router: null }) instanceof Binding)
 	})
 
 	it("onCreatedVirtual", (done) => {
@@ -123,7 +123,7 @@ describe("router.binding", () => {
 		const binding = new RouterBinding({ router })
 		const link = new Link("/ytrzxxdsa/bcvcb")
 		rootBinding.run(RouterModel, { binding })
-		binding.listen(router, "route set", data => {
+		binding.listen(router, "routeSet", data => {
 			assert.deepEqual(data.route, routes[3])
 			done()
 		})
@@ -172,9 +172,9 @@ describe("router.binding", () => {
 		const router = new Router(routes)
 		const binding = new RouterBinding({ router })
 		rootBinding.run(RouterModel, { binding })
-		router.emit("route set", { route: routes[1], parameters: { text: 2 } })
-		router.emit("route set", { route: routes[2], parameters: { text: 3 } })
-		router.emit("route set", { route: routes[3], parameters: { text: 4 } })
+		router.emit("routeSet", { route: routes[1], parameters: { text: 2 } })
+		router.emit("routeSet", { route: routes[2], parameters: { text: 3 } })
+		router.emit("routeSet", { route: routes[3], parameters: { text: 4 } })
 	})
 
 	it("popStatePathName", (done) => {

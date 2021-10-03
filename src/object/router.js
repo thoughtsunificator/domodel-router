@@ -1,16 +1,16 @@
-/** @module router */
-
 import { Observable } from "domodel"
 import { Tokenizer, Token } from "@thoughtsunificator/route-tokenizer"
 
 /**
- * @memberof: module:router
+ * @global
  */
 class Router extends Observable {
 
 	/**
-	 * @typedef {string} RouterType
-	 * @type {RouterType}
+	 * @property RouterType {RouterType}
+	 * @property RouterType.VIRTUAL {string}
+	 * @property RouterType.PATHNAME {string}
+	 * @property RouterType.HASH {string}
 	 */
 	static TYPE = {
 		VIRTUAL: "VIRTUAL",
@@ -69,6 +69,7 @@ class Router extends Observable {
 	}
 
 	/**
+	 * @readonly
 	 * @type {Route[]}
 	 */
 	get routes() {
@@ -76,6 +77,7 @@ class Router extends Observable {
 	}
 
 	/**
+	 * @readonly
 	 * @type {RouterType}
 	 */
 	get type() {
@@ -83,6 +85,7 @@ class Router extends Observable {
 	}
 
 	/**
+	 * @readonly
 	 * @type {Route}
 	 */
 	get errorRoute() {
@@ -90,6 +93,7 @@ class Router extends Observable {
 	}
 
 	/**
+	 * @readonly
 	 * @type {string}
 	 */
 	get initialPath() {

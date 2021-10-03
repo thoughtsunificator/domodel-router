@@ -2,7 +2,7 @@
 	"name": "@domodel/router",
 	"type": "module",
 	"description": "Router system for domodel",
-	"version": "1.0.8",
+	"version": "1.0.17",
 	"main": "index.js",
 	"repository": {
 		"type": "git",
@@ -27,6 +27,6 @@
 	},
 	"dependencies": {
 		"@thoughtsunificator/route-tokenizer": "^0.0.3",
-		"domodel": "^1.0.5"
+		"domodel": "^1.0.31"
 	}
 }
