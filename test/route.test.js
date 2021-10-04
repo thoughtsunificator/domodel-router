@@ -10,7 +10,6 @@ describe("route", () => {
 		const route = new Route("/test", model, Binding)
 		assert.strictEqual(route.match, "/test")
 		assert.deepEqual(route.model, model)
-		assert.ok(new route.binding() instanceof Binding)
 		assert.throws(function() {
 			route.match = 1
 			route.model = 1
