@@ -34,7 +34,7 @@ describe("link.binding", () => {
 		const link = new Link("/test1")
 		const router = new Router(routes, Router.TYPE.VIRTUAL)
 		const binding = new LinkBinding({ link, router })
-		rootBinding.run(LinkModel, { binding })
+		rootBinding.run(LinkModel(), { binding })
 		assert.strictEqual(binding.root.href, "")
 	})
 
@@ -42,7 +42,7 @@ describe("link.binding", () => {
 		const link = new Link("/test2")
 		const router = new Router(routes, Router.TYPE.PATHNAME)
 		const binding = new LinkBinding({ link, router })
-		rootBinding.run(LinkModel, { binding })
+		rootBinding.run(LinkModel(), { binding })
 		assert.strictEqual(binding.root.href, "https://localhost/test2")
 	})
 
@@ -50,7 +50,7 @@ describe("link.binding", () => {
 		const link = new Link("/test3")
 		const router = new Router(routes, Router.TYPE.HASH)
 		const binding = new LinkBinding({ link, router })
-		rootBinding.run(LinkModel, { binding })
+		rootBinding.run(LinkModel(), { binding })
 		assert.strictEqual(binding.root.href, "https://localhost/#/test3")
 	})
 
@@ -62,7 +62,7 @@ describe("link.binding", () => {
 		})
 		const link = new Link("/virtual")
 		const binding = new LinkBinding({ link, router })
-		rootBinding.run(LinkModel, { binding })
+		rootBinding.run(LinkModel(), { binding })
 		binding.root.dispatchEvent(new window.Event('click'))
 	})
 
@@ -74,7 +74,7 @@ describe("link.binding", () => {
 		})
 		const link = new Link("/pathname")
 		const binding = new LinkBinding({ link, router })
-		rootBinding.run(LinkModel, { binding })
+		rootBinding.run(LinkModel(), { binding })
 		binding.root.dispatchEvent(new window.Event('click'))
 	})
 
@@ -86,7 +86,7 @@ describe("link.binding", () => {
 		})
 		const link = new Link("/hash")
 		const binding = new LinkBinding({ link, router })
-		rootBinding.run(LinkModel, { binding })
+		rootBinding.run(LinkModel(), { binding })
 		binding.root.dispatchEvent(new window.Event('click'))
 	})
 
