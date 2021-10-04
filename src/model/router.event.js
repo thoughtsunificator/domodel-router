@@ -45,7 +45,8 @@ class RouterEventListener extends EventListener {
 		if(this.properties.router.view !== null) {
 			this.properties.router.view.binding.remove()
 		}
-		this.properties.router.view = new View(new route.binding({ ...this.properties }), parameters)
+		this.properties.router.view = new View(parameters)
+		this.properties.router.view.binding = new route.binding({ ...this.properties })
 		this.run(route.model(this.properties.router), { binding: this.properties.router.view.binding })
 	}
 
