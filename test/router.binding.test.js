@@ -28,7 +28,7 @@ describe("router.binding", () => {
 	})
 
 	it("instance", () => {
-		assert.ok(new RouterBinding({ router: null }) instanceof Binding)
+		assert.ok(RouterBinding.prototype instanceof Binding)
 	})
 
 	it("onCreatedVirtual", (done) => {

@@ -31,7 +31,7 @@ describe("router", () => {
 		assert.strictEqual(router.type, Router.TYPE.VIRTUAL)
 		assert.strictEqual(router.errorRoute, undefined)
 		assert.strictEqual(router.initialPath, "/")
-		assert.ok(router instanceof Observable)
+		assert.ok(Router.prototype instanceof Observable)
 		assert.throws(function() {
 			route.routes = 1
 			route.type = 1

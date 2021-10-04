@@ -27,7 +27,7 @@ describe("link.binding", () => {
 	})
 
 	it("instance", () => {
-		assert.ok(new LinkBinding() instanceof Binding)
+		assert.ok(LinkBinding.prototype instanceof Binding)
 	})
 
 	it("onCreatedVirtual", () => {
