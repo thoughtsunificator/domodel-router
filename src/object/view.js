@@ -9,9 +9,8 @@ class View extends Observable {
 	 * @param {Binding} binding
 	 * @param {object} [parameters={}]
 	 */
-	constructor(binding, parameters = {}) {
+	constructor(parameters = {}) {
 		super()
-		this._binding = binding
 		this._parameters = parameters
 	}
 
