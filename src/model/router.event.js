@@ -8,7 +8,8 @@ import View from "../object/view.js"
 class RouterEventListener extends EventListener {
 
 	/**
-	 * @param {Link} link
+	 * @event RouterEventListener#navigate
+	 * @property {Link} link
 	 * @example router.emit("navigate", new Link("/path"))
 	 */
 	navigate(link) {
@@ -21,7 +22,8 @@ class RouterEventListener extends EventListener {
 	}
 
 	/**
-	 * @param {Link} link
+	 * @event RouterEventListener#browse
+	 * @property {Link} link
 	 * @example router.emit("browse", new Link("/path"))
 	 */
 	browse(link) {
@@ -35,9 +37,10 @@ class RouterEventListener extends EventListener {
 	}
 
 	/**
-	 * @param {object} data
-	 * @param {Route}  data.route
-	 * @param {object} data.parameters
+	 * @event RouterEventListener#routeSet
+	 * @property {object} data
+	 * @property {Route}  data.route
+	 * @property {object} data.parameters
 	 * @example router.emit("routeSet", { route: new Route(...), parameters: {...} })
 	 */
 	routeSet(data) {
