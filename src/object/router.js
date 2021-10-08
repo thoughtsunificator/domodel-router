@@ -34,11 +34,11 @@ class Router extends Observable {
 	}
 
 	/**
-	 * @param  {URL}   url
+	 * @param  {string} path
 	 * @return {Route}
 	 */
-	match(url) {
-		const uriTokens = Tokenizer.tokenize(url.pathname)
+	match(path) {
+		const uriTokens = Tokenizer.tokenize(path)
 		for (const route of this.routes) {
 			const validTokens = []
 			const routeTokens = Tokenizer.tokenize(route.match)
