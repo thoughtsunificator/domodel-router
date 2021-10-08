@@ -27,8 +27,7 @@ class RouterEventListener extends EventListener {
 	 * @example router.emit("browse", new Link("/path"))
 	 */
 	browse(link) {
-		const url = new URL(link.path, this.root.ownerDocument.location)
-		const match = this.properties.router.match(url)
+		const match = this.properties.router.match(link.path)
 		if(match) {
 			this.properties.router.emit("routeSet", { route: match.route, parameters: match.parameters })
 		} else if(this.properties.router.errorRoute) {
