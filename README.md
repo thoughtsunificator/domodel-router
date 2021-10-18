@@ -25,17 +25,17 @@ import MyViewBinding from "/model/my-view.binding.js"
 import MyView2Binding from "/model/my-view2.binding.js"
 
 const routes = [
-	new Route("/", MyViewModel, MyViewBinding),
-	new Route("/test", MyViewModel2, MyView2Binding)
+  new Route("/", MyViewModel, MyViewBinding),
+  new Route("/test", MyViewModel2, MyView2Binding)
 ]
 
 window.addEventListener("load", function() {
 
-	const router = new Router(routes, Router.TYPE.HASH)
+  const router = new Router(routes, Router.TYPE.HASH)
 
-	Core.run(RouterModel, {
-		binding: new RouterBinding({ router }),
-		parentNode: document.body
-	})
+  Core.run(RouterModel, {
+    binding: new RouterBinding({ router }),
+    parentNode: document.body
+  })
 })
 ```
