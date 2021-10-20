@@ -146,6 +146,7 @@ describe("router.binding", () => {
 				} else if(index === 1) {
 					assert.strictEqual(removeCount, 1)
 					assert.strictEqual(this.root.textContent, "2")
+					assert.strictEqual(this.properties.myRouteProperty, "hello")
 					assert.strictEqual(router.view.parameters.text, 2)
 				} else if(index === 2) {
 					assert.strictEqual(removeCount, 2)
@@ -168,7 +169,7 @@ describe("router.binding", () => {
 		}
 		const routes = [
 			new Route("/", data => ({ tagName: "div", textContent: data.router.view.parameters.text }), MyBinding),
-			new Route("/cxzcxz", data => ({ tagName: "div", textContent: data.router.view.parameters.text }), MyBinding),
+			new Route("/cxzcxz", data => ({ tagName: "div", textContent: data.router.view.parameters.text }), MyBinding, { myRouteProperty: "hello" }),
 			new Route("/gfgfd", data => ({ tagName: "div", textContent: data.router.view.parameters.text }), MyBinding),
 			new Route("/ytrzxxdsa/bcvcb", data => ({ tagName: "div", textContent: data.router.view.parameters.text }), MyBinding),
 		]

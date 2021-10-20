@@ -49,7 +49,7 @@ class RouterEventListener extends EventListener {
 			this.properties.router.view.binding.remove()
 		}
 		this.properties.router.view = new View(parameters)
-		this.properties.router.view.binding = new route.binding({ ...this.properties, ...properties })
+		this.properties.router.view.binding = new route.binding({ ...this.properties, ...route.properties, ...properties })
 		this.run(route.model({ router: this.properties.router, properties }), { binding: this.properties.router.view.binding })
 	}
 
