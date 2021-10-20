@@ -1,5 +1,9 @@
-import { Observable } from "domodel"
+import { Observable, Binding } from "domodel"
 import { Tokenizer, Token } from "@thoughtsunificator/route-tokenizer"
+
+import Route from "./route.js"
+
+import ErrorModel from "../model/error.js"
 
 /**
  * @global
@@ -24,7 +28,7 @@ class Router extends Observable {
 	 * @param {Route}      errorRoute
 	 * @param {string}     initialPath
 	 */
-	constructor(routes, type = Router.TYPE.VIRTUAL, errorRoute, initialPath = "/") {
+	constructor(routes, type = Router.TYPE.VIRTUAL, errorRoute = new Route(null, ErrorModel, Binding), initialPath = "/") {
 		super()
 		this._routes = routes
 		this._type = type
