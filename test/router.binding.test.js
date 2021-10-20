@@ -167,10 +167,10 @@ describe("router.binding", () => {
 			}
 		}
 		const routes = [
-			new Route("/", router => ({ tagName: "div", textContent: router.view.parameters.text }), MyBinding),
-			new Route("/cxzcxz", router => ({ tagName: "div", textContent: router.view.parameters.text }), MyBinding),
-			new Route("/gfgfd", router => ({ tagName: "div", textContent: router.view.parameters.text }), MyBinding),
-			new Route("/ytrzxxdsa/bcvcb", router => ({ tagName: "div", textContent: router.view.parameters.text }), MyBinding),
+			new Route("/", data => ({ tagName: "div", textContent: data.router.view.parameters.text }), MyBinding),
+			new Route("/cxzcxz", data => ({ tagName: "div", textContent: data.router.view.parameters.text }), MyBinding),
+			new Route("/gfgfd", data => ({ tagName: "div", textContent: data.router.view.parameters.text }), MyBinding),
+			new Route("/ytrzxxdsa/bcvcb", data => ({ tagName: "div", textContent: data.router.view.parameters.text }), MyBinding),
 		]
 		const router = new Router(routes)
 		const binding = new RouterBinding({ router })
