@@ -121,9 +121,10 @@ describe("router.binding", () => {
 		]
 		const router = new Router(routes)
 		const binding = new RouterBinding({ router })
-		const link = new Link("/ytrzxxdsa/bcvcb")
+		const link = new Link("/ytrzxxdsa/bcvcb", { test: "abc" })
 		rootBinding.run(RouterModel, { binding })
 		binding.listen(router, "routeSet", data => {
+			assert.deepEqual(data.properties.test, "abc")
 			assert.deepEqual(data.route, routes[3])
 			done()
 		})
@@ -149,10 +150,12 @@ describe("router.binding", () => {
 				} else if(index === 2) {
 					assert.strictEqual(removeCount, 2)
 					assert.strictEqual(this.root.textContent, "3")
+					assert.strictEqual(this.properties.a, "b")
 					assert.strictEqual(router.view.parameters.text, 3)
 				} else if(index === 3) {
 					assert.strictEqual(removeCount, 3)
 					assert.strictEqual(this.root.textContent, "4")
+					assert.strictEqual(this.properties.b, "c")
 					assert.strictEqual(router.view.parameters.text, 4)
 					done()
 				}
@@ -173,8 +176,8 @@ describe("router.binding", () => {
 		const binding = new RouterBinding({ router })
 		rootBinding.run(RouterModel, { binding })
 		router.emit("routeSet", { route: routes[1], parameters: { text: 2 } })
-		router.emit("routeSet", { route: routes[2], parameters: { text: 3 } })
-		router.emit("routeSet", { route: routes[3], parameters: { text: 4 } })
+		router.emit("routeSet", { route: routes[2], parameters: { text: 3 }, properties: { a: "b" } })
+		router.emit("routeSet", { route: routes[3], parameters: { text: 4 }, properties: { b: "c" } })
 	})
 
 	it("popStatePathName", (done) => {

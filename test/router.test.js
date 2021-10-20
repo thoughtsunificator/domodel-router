@@ -3,6 +3,8 @@ import { Binding, Observable } from "domodel"
 
 import { Router, Route } from "../index.js"
 
+import ErrorModel from "../src/model/error.js"
+
 const url = "https://localhost/"
 
 const model = {
@@ -29,7 +31,8 @@ describe("router", () => {
 		const router = new Router([])
 		assert.deepEqual(router.routes, [])
 		assert.strictEqual(router.type, Router.TYPE.VIRTUAL)
-		assert.strictEqual(router.errorRoute, undefined)
+		assert.ok(router.errorRoute instanceof Route)
+		assert.strictEqual(router.errorRoute.model, ErrorModel)
 		assert.strictEqual(router.initialPath, "/")
 		assert.ok(Router.prototype instanceof Observable)
 		assert.throws(function() {
