@@ -39,3 +39,5 @@ window.addEventListener("load", function() {
   })
 })
 ```
+
+See [route-tokenizer](https://github.com/thoughtsunificator/route-tokenizer) for route format.

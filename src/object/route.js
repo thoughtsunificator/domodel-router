@@ -9,11 +9,13 @@ class Route {
 	 * @param {string}  match
 	 * @param {model}   model
 	 * @param {Binding} binding
+	 * @param {object}  properties
 	 */
-	constructor(match, model, binding = Binding) {
+	constructor(match, model, binding = Binding, properties = {}) {
 		this._match = match
 		this._model = model
 		this._binding = binding
+		this._properties = properties
 	}
 
 	/**
@@ -38,6 +40,14 @@ class Route {
 	 */
 	get binding() {
 		return this._binding
+	}
+
+	/**
+	 * @readonly
+	 * @type {object}
+	 */
+	get properties() {
+		return this._properties
 	}
 
 }
