@@ -35,19 +35,21 @@ class RouterBinding extends Binding {
 			}
 		})
 
-		if(router.type === Router.TYPE.VIRTUAL) {
-			router.emit("browse", new Link(router.initialPath))
-		} else {
-			let path
-			if(router.type === Router.TYPE.PATHNAME && this.root.ownerDocument.location.pathname !== "/") {
-				path = this.root.ownerDocument.location.pathname
-			} else if(router.type === Router.TYPE.HASH && this.root.ownerDocument.location.hash.slice(1) !== "") {
-				path = this.root.ownerDocument.location.hash.slice(1)
-			}
-			if(path) {
-				router.emit("browse", new Link(path))
+		if(router.initialPath !== null) {
+			if(router.type === Router.TYPE.VIRTUAL) {
+				router.emit("browse", new Link(router.initialPath))
 			} else {
-				router.emit("navigate", new Link(router.initialPath))
+				let path
+				if(router.type === Router.TYPE.PATHNAME && this.root.ownerDocument.location.pathname !== "/") {
+					path = this.root.ownerDocument.location.pathname
+				} else if(router.type === Router.TYPE.HASH && this.root.ownerDocument.location.hash.slice(1) !== "") {
+					path = this.root.ownerDocument.location.hash.slice(1)
+				}
+				if(path) {
+					router.emit("browse", new Link(path))
+				} else {
+					router.emit("navigate", new Link(router.initialPath))
+				}
 			}
 		}
 	}
