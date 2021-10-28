@@ -3,7 +3,7 @@
 <head>
     
     <meta charset="utf-8">
-    <title>Home - Documentation</title>
+    <title>model/view.binding.js - Documentation</title>
     
     
     <script src="scripts/prettify/prettify.js"></script>
@@ -34,69 +34,36 @@
 
 <div id="main">
     
+    <h1 class="page-title">model/view.binding.js</h1>
+    
 
     
 
 
 
     
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { Binding } from "domodel"
 
+/**
+ * @global
+ */
+class ViewBinding extends Binding {
 
-    <section class="package">
-        <h3> </h3>		
-    </section>
+	/**
+	 * @abstract
+	 */
+	async destroy() {
 
+	}
 
+}
 
-
-
-
-
-
-
-    
-
-
-
-    <section class="readme usertext">
-        <article><h1 id="domodel-router">domodel-router</h1>
-<p>URL routing system for <a href="https://github.com/thoughtsunificator/domodel">domodel</a>.</p>
-<h2 id="getting-started">Getting started</h2>
-<h3 id="prerequisites">Prerequisites</h3>
-<ul>
-<li><a href="https://github.com/thoughtsunificator/domodel">domodel</a></li>
-</ul>
-<h3 id="installing">Installing</h3>
-<p><code>npm install @domodel/router</code></p>
-<h2 id="usage">Usage</h2>
-<pre class="prettyprint source lang-javascript"><code>import { Core } from &quot;domodel&quot;
-import { Router, Route, RouterModel, RouterBinding } from &quot;@domodel/router&quot;
-
-import MyViewModel from &quot;/model/my-view.js&quot;
-import MyViewModel2 from &quot;/model/my-view2.js&quot;
-
-import MyViewBinding from &quot;/model/my-view.binding.js&quot;
-import MyView2Binding from &quot;/model/my-view2.binding.js&quot;
-
-const routes = [
-  new Route(&quot;/&quot;, MyViewModel, MyViewBinding),
-  new Route(&quot;/test&quot;, MyViewModel2, MyView2Binding)
-]
-
-window.addEventListener(&quot;load&quot;, function() {
-
-  const router = new Router(routes, Router.TYPE.HASH)
-
-  Core.run(RouterModel, {
-    binding: new RouterBinding({ router }),
-    parentNode: document.body
-  })
-})
+export default ViewBinding
 </code></pre>
-<p>See <a href="https://github.com/thoughtsunificator/route-tokenizer">route-tokenizer</a> for route format.</p></article>
+        </article>
     </section>
-
-
 
 
 
