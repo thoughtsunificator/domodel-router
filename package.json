@@ -2,7 +2,7 @@
 	"name": "@domodel/router",
 	"type": "module",
 	"description": "Router system for domodel",
-	"version": "1.0.31",
+	"version": "1.0.32",
 	"main": "index.js",
 	"repository": {
 		"type": "git",
