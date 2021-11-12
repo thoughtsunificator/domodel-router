@@ -29,9 +29,9 @@ class RouterEventListener extends EventListener {
 	browse(link) {
 		const match = this.properties.router.match(link.path)
 		if(match) {
-			this.properties.router.emit("routeSet", { route: match.route, parameters: match.parameters, properties: link.properties })
+			this.properties.router.emit("routeSet", { route: match.route, parameters: match.parameters, path: link.path, properties: link.properties })
 		} else {
-			this.properties.router.emit("routeSet", { route: this.properties.router.errorRoute, properties: { path: link.path } })
+			this.properties.router.emit("routeSet", { route: this.properties.router.errorRoute, path: link.path, properties: { path: link.path } })
 		}
 	}
 
@@ -44,11 +44,12 @@ class RouterEventListener extends EventListener {
 	 * @example router.emit("routeSet", { route: new Route(...), parameters: {...} })
 	 */
 	routeSet(data) {
-		const { route, parameters, properties = {} } = data
+		const { route, parameters, properties = {}, path } = data
 		if(this.properties.router.view !== null) {
 			this.properties.router.view.binding.remove()
 		}
-		this.properties.router.view = new View(parameters)
+		this.properties.router._path = path
+		this.properties.router._view = new View(parameters)
 		this.properties.router.view.binding = new route.binding({ ...this.properties, ...route.properties, ...properties })
 		this.run(route.model(this.properties), { binding: this.properties.router.view.binding })
 	}

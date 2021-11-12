@@ -34,9 +34,11 @@ describe("router", () => {
 		assert.ok(router.errorRoute instanceof Route)
 		assert.strictEqual(router.errorRoute.model, ErrorModel)
 		assert.strictEqual(router.initialPath, "/")
+		assert.strictEqual(router.path, null)
 		assert.ok(Router.prototype instanceof Observable)
 		assert.throws(function() {
 			route.routes = 1
+			route.path = 1
 			route.type = 1
 			route.errorRoute = 1
 			route.initialPath = 1
