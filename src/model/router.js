@@ -1,3 +1,4 @@
 export default {
-	tagName: "div"
+	tagName: "div",
+	className: "router"
 }

@@ -39,6 +39,7 @@ describe("router.binding", () => {
 			done()
 		})
 		rootBinding.run(RouterModel, { binding })
+		assert.strictEqual(router.path, "/virtual")
 	})
 
 	it("onCreatedPathNameInitial", (done) => {
@@ -49,6 +50,7 @@ describe("router.binding", () => {
 			done()
 		})
 		rootBinding.run(RouterModel, { binding })
+		assert.strictEqual(router.path, "/pathname")
 	})
 
 	it("onCreatedPathName", (done) => {
@@ -60,6 +62,7 @@ describe("router.binding", () => {
 			done()
 		})
 		rootBinding.run(RouterModel, { binding })
+		assert.strictEqual(router.path, "/pathname")
 	})
 
 	it("onCreatedHashInitial", (done) => {
@@ -70,6 +73,7 @@ describe("router.binding", () => {
 			done()
 		})
 		rootBinding.run(RouterModel, { binding })
+		assert.strictEqual(router.path, "/hash")
 	})
 
 	it("onCreatedHash", (done) => {
@@ -81,6 +85,7 @@ describe("router.binding", () => {
 			done()
 		})
 		rootBinding.run(RouterModel, { binding })
+		assert.strictEqual(router.path, "/hash")
 	})
 
 	it("onCreatedInitialPathNull", () => {
@@ -88,6 +93,7 @@ describe("router.binding", () => {
 		const binding = new RouterBinding({ router })
 		rootBinding.run(RouterModel, { binding })
 		assert.strictEqual(router.view, null)
+		assert.strictEqual(router.path, null)
 	})
 
 	it("popStatePathName", (done) => {
@@ -100,6 +106,7 @@ describe("router.binding", () => {
 		})
 		virtualDOM.reconfigure({ url: `${url}/vcxvuygwqeguyidsa321` })
 		window.dispatchEvent(new window.PopStateEvent('popstate'))
+		assert.strictEqual(router.path, "/vcxvuygwqeguyidsa321")
 	})
 
 	it("popStateHash", (done) => {

@@ -35,6 +35,7 @@ class Router extends Observable {
 		this._errorRoute = errorRoute
 		this._initialPath = initialPath
 		this._view = null
+		this._path = null
 	}
 
 	/**
@@ -105,14 +106,19 @@ class Router extends Observable {
 	}
 
 	/**
+	 * @readonly
 	 * @type {View}
 	 */
 	get view() {
 		return this._view
 	}
 
-	set view(view) {
-		this._view = view
+	/**
+	 * @readonly
+	 * @type {type}
+	 */
+	get path() {
+		return this._path
 	}
 
 }

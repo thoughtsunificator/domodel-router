@@ -78,6 +78,7 @@ describe("router.event", () => {
 			done()
 		})
 		router.emit("browse", link)
+		assert.strictEqual(router.path, link.path)
 	})
 
 	it("routeSet", (done) => {
