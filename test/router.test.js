@@ -16,6 +16,7 @@ const routes = [
 	new Route("/test1", model, Binding),
 	new Route("/cxzcxz", model, Binding),
 	new Route("/xvcdgs/{myprop}", model, Binding),
+	new Route("/test1/dsadsa", model, Binding),
 	new Route("/{propA}/test", model, Binding),
 ]
 
@@ -53,15 +54,25 @@ describe("router", () => {
 
 	it("match", () => {
 		const router = new Router(routes)
-		assert.deepEqual(router.match("/").route, routes[0])
-		assert.deepEqual(router.match("/test1").route, routes[1])
-		assert.deepEqual(router.match("/cxzcxz").route, routes[2])
-		assert.deepEqual(router.match("/xziutcxfgyduwdsa"), null)
-		assert.deepEqual(router.match("/xvcdgs/8765").route, routes[3])
+		assert.strictEqual(router.match("/").route, routes[0])
+		assert.strictEqual(router.match("/test1").route, routes[1])
+		assert.strictEqual(router.match("/test1/").route, routes[1])
+		assert.strictEqual(router.match("/test1/dsadsa").route, routes[4])
+		assert.strictEqual(router.match("/test1/dsadsa/").route, routes[4])
+		assert.strictEqual(router.match("/test1/dsadsa "), null)
+		assert.strictEqual(router.match("/cxzcxz").route, routes[2])
+		assert.strictEqual(router.match("/xziutcxfgyduwdsa"), null)
+		assert.strictEqual(router.match("/xvcdgs/8765").route, routes[3])
 		assert.strictEqual(Object.keys(router.match("/xvcdgs/8765").parameters).length, 1)
 		assert.strictEqual(router.match("/xvcdgs/8765").parameters.myprop, "8765")
 		assert.strictEqual(Object.keys(router.match("/jhgyrtwe/test").parameters).length, 1)
 		assert.strictEqual(router.match("/jhgyrtwe/test").parameters.propA, "jhgyrtwe")
+		assert.strictEqual(router.match("/jhgyrtwe/test").route, routes[5])
+		assert.strictEqual(router.match("/jhgyrtwe/test/").route, routes[5])
+		assert.strictEqual(router.match("/jhgyrtwecxzcxzczx/test").route, routes[5])
+		assert.strictEqual(router.match("/jhgyrtwecxzcxzczx/test/").route, routes[5])
+		assert.strictEqual(router.match("//jhgyrtwecxzcxzczx/test"), null)
+		assert.strictEqual(router.match("/jhgyrtwecxzcxzczx/test2"), null)
 	})
 
 })
