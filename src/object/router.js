@@ -44,9 +44,15 @@ class Router extends Observable {
 	 */
 	match(path) {
 		const uriTokens = Tokenizer.tokenize(path)
+		if(uriTokens[uriTokens.length - 1]?.buffer === "/") {
+			uriTokens.pop()
+		}
 		for (const route of this.routes) {
 			const validTokens = []
 			const routeTokens = Tokenizer.tokenize(route.match)
+			if(routeTokens[routeTokens.length - 1]?.buffer === "/") {
+				routeTokens.pop()
+			}
 			if (routeTokens.length !== uriTokens.length) {
 				continue
 			}
