@@ -31,6 +31,13 @@ describe("router.binding", () => {
 		assert.ok(RouterBinding.prototype instanceof Binding)
 	})
 
+	it("onCreated", () => {
+		const router = new Router([])
+		const binding = new RouterBinding({ router })
+		rootBinding.run(RouterModel, { binding })
+		assert.strictEqual(binding.identifier.view.className, "router")
+	})
+
 	it("onCreatedVirtual", (done) => {
 		const router = new Router([], Router.TYPE.VIRTUAL, null, "/virtual")
 		const binding = new RouterBinding({ router })

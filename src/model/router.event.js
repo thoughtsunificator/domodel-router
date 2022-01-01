@@ -51,7 +51,7 @@ class RouterEventListener extends EventListener {
 		this.properties.router._path = path
 		this.properties.router._view = new View(parameters)
 		this.properties.router.view.binding = new route.binding({ ...this.properties, ...route.properties, ...properties })
-		this.run(route.model(this.properties), { binding: this.properties.router.view.binding })
+		this.run(route.model(this.properties), { parentNode: this.identifier.view, binding: this.properties.router.view.binding })
 	}
 
 }
