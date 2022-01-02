@@ -90,8 +90,8 @@ describe("router.event", () => {
 		const routes = [
 			new Route("/", model, Binding),
 			new Route("/unauthorized", model, Binding),
-			new Route("/protected", model, Binding, {}, (router) => {
-				router.emit("browse", new Link("/unauthorized", { redirected: true }))
+			new Route("/protected", model, Binding, {}, (properties) => {
+				properties.router.emit("browse", new Link("/unauthorized", { redirected: true }))
 				return true
 			}),
 		]
