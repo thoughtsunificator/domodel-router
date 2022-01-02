@@ -29,11 +29,11 @@ class Router extends Observable {
 	 * @param {Route}      errorRoute
 	 * @param {string}     initialPath
 	 */
-	constructor(routes, type = Router.TYPE.VIRTUAL, errorRoute = new Route(null, ErrorModel, Binding), initialPath = "/") {
+	constructor(routes, type = Router.TYPE.VIRTUAL, errorRoute, initialPath = "/") {
 		super()
 		this._routes = routes
 		this._type = type
-		this._errorRoute = errorRoute
+		this._errorRoute = errorRoute || new Route(null, ErrorModel, Binding)
 		this._initialPath = initialPath
 		this._view = null
 		this._path = null

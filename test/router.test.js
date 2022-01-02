@@ -50,6 +50,7 @@ describe("router", () => {
 		assert.strictEqual(router__.errorRoute.model, 1)
 		const router___ = new Router([], Router.TYPE.PATHNAME, null, "/test")
 		assert.strictEqual(router___.initialPath, "/test")
+		assert.strictEqual(new Router([], Router.TYPE.VIRTUAL, null, "/").errorRoute.model, ErrorModel)
 	})
 
 	it("match", () => {
