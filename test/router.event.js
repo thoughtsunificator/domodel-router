@@ -99,6 +99,7 @@ describe("router.event", () => {
 		const binding = new RouterBinding({ router })
 		const link = new Link("/protected")
 		rootBinding.run(RouterModel, { binding })
+		assert.strictEqual(router.path, "/")
 		binding.listen(router, "routeSet", data => {
 			assert.deepEqual(data.link.path, "/unauthorized")
 			assert.deepEqual(data.link.properties.redirected, true)
