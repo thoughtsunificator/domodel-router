@@ -31,7 +31,7 @@ class RouterBinding extends Binding {
 					router.emit("browse", new Link(path))
 				}
 			} else if(router.type === Router.TYPE.PATHNAME) {
-				router.emit("browse", new Link(this.root.ownerDocument.location.pathname))
+				router.emit("browse", new Link(this.root.ownerDocument.location.pathname.slice(router.basePath.length)))
 			}
 		})
 
@@ -41,7 +41,7 @@ class RouterBinding extends Binding {
 			} else {
 				let path
 				if(router.type === Router.TYPE.PATHNAME && this.root.ownerDocument.location.pathname !== "/") {
-					path = this.root.ownerDocument.location.pathname
+					path = this.root.ownerDocument.location.pathname.slice(router.basePath.length)
 				} else if(router.type === Router.TYPE.HASH && this.root.ownerDocument.location.hash.slice(1) !== "") {
 					path = this.root.ownerDocument.location.hash.slice(1)
 				}

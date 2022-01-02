@@ -48,6 +48,23 @@ describe("router.event", () => {
 		router.emit("navigate", link)
 	})
 
+	it("navigatePathNameBasePath", (done) => {
+		const router = new Router({
+			routes: [],
+			type: Router.TYPE.PATHNAME,
+			basePath: "/test"
+		})
+		const binding = new RouterBinding({ router })
+		const link = new Link("/pathname")
+		rootBinding.run(RouterModel, { binding })
+		binding.listen(router, "browse", link => {
+			assert.strictEqual(link.path, "/pathname")
+			assert.strictEqual(document.location.href, `${url}/test/pathname`)
+			done()
+		})
+		router.emit("navigate", link)
+	})
+
 	it("navigateHash", (done) => {
 		const router = new Router({
 			routes: [],

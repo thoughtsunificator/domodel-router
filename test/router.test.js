@@ -67,6 +67,8 @@ describe("router", () => {
 			route.type = 1
 			route.errorRoute = 1
 			route.initialPath = 1
+			route.defaultLayout = 1
+			route.basePath = 1
 		})
 		const router_ = new Router({
 			routes: [],
@@ -79,9 +81,11 @@ describe("router", () => {
 			type: Router.TYPE.PATHNAME,
 			errorRoute: new Route({
 				model: errorModel
-			})
+			}),
+			basePath: "/test"
 		})
 		assert.strictEqual(router__.errorRoute.model, errorModel)
+		assert.strictEqual(router__.basePath, "/test")
 		const router___ = new Router({
 			routes: [],
 			type: Router.TYPE.PATHNAME,

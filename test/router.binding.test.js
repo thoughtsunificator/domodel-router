@@ -83,6 +83,22 @@ describe("router.binding", () => {
 		assert.strictEqual(router.path, "/pathname")
 	})
 
+	it("onCreatedPathName basePath", (done) => {
+		const router = new Router({
+			routes: [],
+			type: Router.TYPE.PATHNAME,
+			basePath: "/test"
+		})
+		const binding = new RouterBinding({ router })
+		virtualDOM.reconfigure({ url: `${url}/test/pathname` })
+		binding.listen(router, "browse", link => {
+			assert.strictEqual(link.path, "/pathname")
+			done()
+		})
+		rootBinding.run(RouterModel, { binding })
+		assert.strictEqual(router.path, "/pathname")
+	})
+
 	it("onCreatedHashInitial", (done) => {
 		const router = new Router({
 			routes: [],
@@ -137,6 +153,23 @@ describe("router.binding", () => {
 			done()
 		})
 		virtualDOM.reconfigure({ url: `${url}/vcxvuygwqeguyidsa321` })
+		window.dispatchEvent(new window.PopStateEvent('popstate'))
+		assert.strictEqual(router.path, "/vcxvuygwqeguyidsa321")
+	})
+
+	it("popStatePathName basePath", (done) => {
+		const router = new Router({
+			routes: [],
+			type: Router.TYPE.PATHNAME,
+			basePath: "/test"
+		})
+		const binding = new RouterBinding({ router })
+		rootBinding.run(RouterModel, { binding })
+		binding.listen(router, "browse", link => {
+			assert.strictEqual(link.path, "/vcxvuygwqeguyidsa321")
+			done()
+		})
+		virtualDOM.reconfigure({ url: `${url}/test/vcxvuygwqeguyidsa321` })
 		window.dispatchEvent(new window.PopStateEvent('popstate'))
 		assert.strictEqual(router.path, "/vcxvuygwqeguyidsa321")
 	})

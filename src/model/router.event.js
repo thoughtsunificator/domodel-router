@@ -19,7 +19,7 @@ class RouterEventListener extends EventListener {
 		if(this.properties.router.type === Router.TYPE.HASH) {
 			path = `#${link.path}`
 		}
-		this.root.ownerDocument.defaultView.history.pushState({}, null, path)
+		this.root.ownerDocument.defaultView.history.pushState({}, null, `${this.properties.router.basePath}${path}`)
 		this.properties.router.emit("browse", link)
 	}
 

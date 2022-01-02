@@ -29,7 +29,7 @@ class Router extends Observable {
 	 * @param {Route}      errorRoute
 	 * @param {string}     initialPath
 	 */
-	constructor({ routes, type = Router.TYPE.VIRTUAL, errorRoute, initialPath = "/", defaultLayout } = {}) {
+	constructor({ routes, type = Router.TYPE.VIRTUAL, errorRoute, initialPath = "/", defaultLayout, basePath = "" } = {}) {
 		super()
 		this._routes = routes
 		this._type = type
@@ -41,6 +41,7 @@ class Router extends Observable {
 		this._view = null
 		this._path = null
 		this._defaultLayout = defaultLayout
+		this._basePath = basePath
 	}
 
 	/**
@@ -131,10 +132,18 @@ class Router extends Observable {
 
 	/**
 	 * @readonly
-	 * @type {type}
+	 * @type {Model}
 	 */
 	get defaultLayout() {
 		return this._defaultLayout
+	}
+
+	/**
+	 * @readonly
+	 * @type {string}
+	 */
+	get basePath() {
+		return this._basePath
 	}
 
 }
