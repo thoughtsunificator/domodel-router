@@ -83,6 +83,32 @@ describe("router.event", () => {
 		assert.strictEqual(router.path, link.path)
 	})
 
+	it("browse middleware", () => {
+		const model = data => ({
+			tagName: "div"
+		})
+		const routes = [
+			new Route("/", model, Binding),
+			new Route("/unauthorized", model, Binding),
+			new Route("/protected", model, Binding, {}, (router) => {
+				router.emit("browse", new Link("/unauthorized", { redirected: true }))
+				return false
+			}),
+		]
+		const router = new Router(routes)
+		const binding = new RouterBinding({ router })
+		const link = new Link("/protected")
+		rootBinding.run(RouterModel, { binding })
+		binding.listen(router, "routeSet", data => {
+			assert.deepEqual(data.link.path, "/unauthorized")
+			assert.deepEqual(data.link.properties.redirected, true)
+			assert.deepEqual(data.match.route, routes[1])
+			assert.strictEqual(router.path, "/unauthorized")
+		})
+		router.emit("browse", link)
+		assert.strictEqual(router.path, "/unauthorized")
+	})
+
 	it("routeSet", (done) => {
 		let index = 0
 		let removeCount = 0
