@@ -217,18 +217,29 @@ describe("router.event", () => {
 	})
 
 	it("routeSet layout", () => {
+		class myBinding extends Binding {
+			onCreated() {
+				this.root.textContent = "Hello World"
+			}
+		}
 		const routes = [
 			new Route({
 				match: "/test1",
 				model: () => ({ tagName: "div", textContent: "Test" }),
 				binding: Binding,
-				layout: data => ({ tagName: "div", textContent: "Test1", children: [ data ] })
+				layout: {
+					model: { tagName: "div", textContent: "Test1", identifier: "view" },
+					binding: Binding
+				}
 			}),
 			new Route({
 				match: "/test2",
 				model: () => ({ tagName: "div", textContent: "Test" }),
 				binding: Binding,
-				layout: data => ({ tagName: "div", textContent: "Test2", children: [ data ] })
+				layout: {
+					model: { tagName: "div", textContent: "Test2", identifier: "view" },
+					binding: myBinding
+				}
 			}),
 			new Route({
 				match: "/test3",
@@ -242,18 +253,26 @@ describe("router.event", () => {
 		router.emit("routeSet", { match: new Match(routes[0]), link: new Link("/test1") })
 		assert.strictEqual(binding.root.innerHTML, "<div>Test1<div>Test</div></div>")
 		router.emit("routeSet", { match: new Match(routes[1]), link: new Link("/test2") })
-		assert.strictEqual(binding.root.innerHTML, "<div>Test2<div>Test</div></div>")
+		assert.strictEqual(binding.root.innerHTML, "<div>Hello World<div>Test</div></div>")
 		router.emit("routeSet", { match: new Match(routes[2]), link: new Link("/test3") })
 		assert.strictEqual(binding.root.innerHTML, "<div>Test</div>")
 	})
 
 	it("routeSet defaultLayout", () => {
+		class myBinding extends Binding {
+			onCreated() {
+				this.root.textContent = "Hello World"
+			}
+		}
 		const routes = [
 			new Route({
 				match: "/test1",
 				model: () => ({ tagName: "div", textContent: "Test" }),
 				binding: Binding,
-				layout: data => ({ tagName: "div", textContent: "Test1", children: [ data ] })
+				layout: {
+					model: { tagName: "div", textContent: "Test1", identifier: "view" },
+					binding: Binding
+				}
 			}),
 			new Route({
 				match: "/test2",
@@ -264,7 +283,10 @@ describe("router.event", () => {
 		const router = new Router({
 			routes,
 			type: Router.TYPE.VIRTUAL,
-			defaultLayout: data => ({ tagName: "div", textContent: "Test2", children: [ data ] })
+			defaultLayout: {
+				model: { tagName: "div", textContent: "Test2", identifier: "view" },
+				binding: Binding
+			}
 		})
 		const binding = new RouterBinding({ router })
 		rootBinding.run(RouterModel, { binding })

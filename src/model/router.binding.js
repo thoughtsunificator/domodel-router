@@ -70,6 +70,14 @@ class RouterBinding extends Binding {
 		return this._view
 	}
 
+	/**
+	 * @readonly
+	 * @type {Binding}
+	 */
+	get layoutBinding() {
+		return this._layoutBinding
+	}
+
 }
 
 export default RouterBinding

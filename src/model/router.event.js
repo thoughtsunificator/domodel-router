@@ -50,18 +50,29 @@ class RouterEventListener extends EventListener {
 	routeSet(data) {
 		const { match, link } = data
 		if(this.properties.router.view !== null) {
-			this.properties.router.view.binding.remove()
+			if(this.layoutBinding) {
+				this.layoutBinding.remove()
+				this._layoutBinding = null
+			} else {
+				this.properties.router.view.binding.remove()
+			}
 		}
 		this.properties.router._path = link.path
 		this.properties.router._view = new View(match.parameters)
 		this.properties.router.view.binding = new match.route.binding({ ...this.properties, ...match.route.properties, ...link.properties })
 		let model = match.route.model(this.properties)
+		let layoutBinding = this
 		if(match.route.layout) {
-			model = match.route.layout(model)
+			layoutBinding = new match.route.layout.binding()
+			this.run(match.route.layout.model, { binding: layoutBinding })
 		} else if(this.properties.router.defaultLayout) {
-			model = this.properties.router.defaultLayout(model)
+			layoutBinding = new this.properties.router.defaultLayout.binding()
+			this.run(this.properties.router.defaultLayout.model, { binding: layoutBinding })
 		}
-		this.run(model, { parentNode: this.identifier.view, binding: this.properties.router.view.binding })
+		if(layoutBinding !== this) {
+			this._layoutBinding = layoutBinding
+		}
+		layoutBinding.run(model, { parentNode: layoutBinding.identifier.view, binding: this.properties.router.view.binding })
 	}
 
 }
