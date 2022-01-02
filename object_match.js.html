@@ -3,7 +3,7 @@
 <head>
     
     <meta charset="utf-8">
-    <title>object/view.js - Documentation</title>
+    <title>object/match.js - Documentation</title>
     
     
     <script src="scripts/prettify/prettify.js"></script>
@@ -34,7 +34,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">object/view.js</h1>
+    <h1 class="page-title">object/match.js</h1>
     
 
     
@@ -44,20 +44,26 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import { Observable } from "domodel"
-
-/**
+            <pre class="prettyprint source linenums"><code>/**
  * @global
  */
-class View extends Observable {
+class Match {
 
 	/**
-	 * @param {Binding} binding
-	 * @param {object} [parameters={}]
+	 * @param {Route}  route
+	 * @param {object} parameters
 	 */
-	constructor(parameters = {}) {
-		super()
+	constructor(route, parameters = {}) {
+		this._route = route
 		this._parameters = parameters
+	}
+
+	/**
+	 * @readonly
+	 * @type {Route}
+	 */
+	get route() {
+		return this._route
 	}
 
 	/**
@@ -68,20 +74,9 @@ class View extends Observable {
 		return this._parameters
 	}
 
-	/**
-	 * @type {Binding}
-	 */
-	get binding() {
-		return this._binding
-	}
-
-	set binding(binding) {
-		this._binding = binding
-	}
-
 }
 
-export default View
+export default Match
 </code></pre>
         </article>
     </section>
