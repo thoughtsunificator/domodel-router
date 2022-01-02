@@ -6,16 +6,18 @@ import { Binding } from "domodel"
 class Route {
 
 	/**
-	 * @param {string}  match
-	 * @param {model}   model
-	 * @param {Binding} binding
-	 * @param {object}  properties
+	 * @param {string}   match
+	 * @param {model}    model
+	 * @param {Binding}  binding
+	 * @param {object}   properties
+	 * @param {function} middleware
 	 */
-	constructor(match, model, binding = Binding, properties = {}) {
+	constructor(match, model, binding = Binding, properties = {}, middleware) {
 		this._match = match
 		this._model = model
 		this._binding = binding
 		this._properties = properties
+		this._middleware = middleware
 	}
 
 	/**
@@ -48,6 +50,14 @@ class Route {
 	 */
 	get properties() {
 		return this._properties
+	}
+
+	/**
+	 * @readonly
+	 * @type {function}
+	 */
+	get middleware() {
+		return this._middleware
 	}
 
 }

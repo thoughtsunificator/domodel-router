@@ -1,7 +1,7 @@
 import assert from "assert"
 import { Binding, Observable } from "domodel"
 
-import { Router, Route } from "../index.js"
+import { Router, Route, Match } from "../index.js"
 
 import ErrorModel from "../src/model/error.js"
 
@@ -54,6 +54,7 @@ describe("router", () => {
 
 	it("match", () => {
 		const router = new Router(routes)
+		assert.ok(router.match("/") instanceof Match)
 		assert.strictEqual(router.match("/").route, routes[0])
 		assert.strictEqual(router.match("/test1").route, routes[1])
 		assert.strictEqual(router.match("/test1/").route, routes[1])

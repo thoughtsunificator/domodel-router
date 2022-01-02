@@ -2,6 +2,7 @@ import { Observable, Binding } from "domodel"
 import { Tokenizer, Token } from "@thoughtsunificator/route-tokenizer"
 
 import Route from "./route.js"
+import Match from "./match.js"
 
 import ErrorModel from "../model/error.js"
 
@@ -70,10 +71,7 @@ class Router extends Observable {
 						parameters[routeTokens[index].buffer.slice(1, -1)] = decodeURIComponent(token.buffer)
 					}
 				}
-				return {
-					route,
-					parameters
-				}
+				return new Match(route, parameters)
 			}
 		}
 		return null

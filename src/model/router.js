@@ -1,4 +1,5 @@
 export default {
 	tagName: "div",
-	className: "router"
+	className: "router",
+	identifier: "view"
 }

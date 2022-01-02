@@ -3,7 +3,7 @@ import { JSDOM } from "jsdom"
 import { Core, Binding, EventListener } from "domodel"
 
 import RouterEventListener  from "../src/model/router.event.js"
-import { RouterModel, RouterBinding, Router, Route, Link }  from "../index.js"
+import { RouterModel, RouterBinding, Router, Route, Link, Match }  from "../index.js"
 
 import View from "../src/object/view.js"
 
@@ -73,12 +73,40 @@ describe("router.event", () => {
 		const link = new Link("/ytrzxxdsa/bcvcb", { test: "abc" })
 		rootBinding.run(RouterModel, { binding })
 		binding.listen(router, "routeSet", data => {
-			assert.deepEqual(data.properties.test, "abc")
-			assert.deepEqual(data.route, routes[3])
+			assert.ok(data.match instanceof Match)
+			assert.ok(data.link instanceof Link)
+			assert.deepEqual(data.link.properties.test, "abc")
+			assert.deepEqual(data.match.route, routes[3])
 			done()
 		})
 		router.emit("browse", link)
 		assert.strictEqual(router.path, link.path)
+	})
+
+	it("browse middleware", () => {
+		const model = data => ({
+			tagName: "div"
+		})
+		const routes = [
+			new Route("/", model, Binding),
+			new Route("/unauthorized", model, Binding),
+			new Route("/protected", model, Binding, {}, (router) => {
+				router.emit("browse", new Link("/unauthorized", { redirected: true }))
+				return false
+			}),
+		]
+		const router = new Router(routes)
+		const binding = new RouterBinding({ router })
+		const link = new Link("/protected")
+		rootBinding.run(RouterModel, { binding })
+		binding.listen(router, "routeSet", data => {
+			assert.deepEqual(data.link.path, "/unauthorized")
+			assert.deepEqual(data.link.properties.redirected, true)
+			assert.deepEqual(data.match.route, routes[1])
+			assert.strictEqual(router.path, "/unauthorized")
+		})
+		router.emit("browse", link)
+		assert.strictEqual(router.path, "/unauthorized")
 	})
 
 	it("routeSet", (done) => {
@@ -126,9 +154,9 @@ describe("router.event", () => {
 		const router = new Router(routes)
 		const binding = new RouterBinding({ router })
 		rootBinding.run(RouterModel, { binding })
-		router.emit("routeSet", { route: routes[1], parameters: { text: 2 } })
-		router.emit("routeSet", { route: routes[2], parameters: { text: 3 }, properties: { a: "b" } })
-		router.emit("routeSet", { route: routes[3], parameters: { text: 4 }, properties: { b: "c" } })
+		router.emit("routeSet", { match: new Match(routes[1], { text: 2 }), link: new Link("/cxzcxz") })
+		router.emit("routeSet", { match: new Match(routes[2], { text: 3 }), link: new Link("/gfgfd", { a: "b" }) })
+		router.emit("routeSet", { match: new Match(routes[3], { text: 4 }), link: new Link("/ytrzxxdsa/bcvcb", { b: "c" }) })
 	})
 
 })

@@ -1,6 +1,8 @@
 import { EventListener } from "domodel"
 import Router from "../object/router.js"
 import View from "../object/view.js"
+import Match from "../object/match.js"
+import Link from "../object/link.js"
 
 /**
  * @global
@@ -13,11 +15,11 @@ class RouterEventListener extends EventListener {
 	 * @example router.emit("navigate", new Link("/path"))
 	 */
 	navigate(link) {
-		let url = link.path
+		let path = link.path
 		if(this.properties.router.type === Router.TYPE.HASH) {
-			url = `#${link.path}`
+			path = `#${link.path}`
 		}
-		this.root.ownerDocument.defaultView.history.pushState({}, null, url)
+		this.root.ownerDocument.defaultView.history.pushState({}, null, path)
 		this.properties.router.emit("browse", link)
 	}
 
@@ -29,29 +31,31 @@ class RouterEventListener extends EventListener {
 	browse(link) {
 		const match = this.properties.router.match(link.path)
 		if(match) {
-			this.properties.router.emit("routeSet", { route: match.route, parameters: match.parameters, path: link.path, properties: link.properties })
+			if(match.route.middleware && !match.route.middleware(this.properties.router)) {
+				return
+			}
+			this.properties.router.emit("routeSet", { match, link })
 		} else {
-			this.properties.router.emit("routeSet", { route: this.properties.router.errorRoute, path: link.path, properties: { path: link.path } })
+			this.properties.router.emit("routeSet", { match: new Match(this.properties.router.errorRoute), link: new Link(link.path, { path: link.path }) })
 		}
 	}
 
 	/**
 	 * @event RouterEventListener#routeSet
 	 * @property {object} data
-	 * @property {Route}  data.route
-	 * @property {object} data.parameters
-	 * @property {object} data.properties
-	 * @example router.emit("routeSet", { route: new Route(...), parameters: {...} })
+	 * @property {Match}  data.match
+	 * @property {Link}   data.link
+	 * @example router.emit("routeSet", { match: new Match(...), link: new Link(...) })
 	 */
 	routeSet(data) {
-		const { route, parameters, properties = {}, path } = data
+		const { match, link } = data
 		if(this.properties.router.view !== null) {
 			this.properties.router.view.binding.remove()
 		}
-		this.properties.router._path = path
-		this.properties.router._view = new View(parameters)
-		this.properties.router.view.binding = new route.binding({ ...this.properties, ...route.properties, ...properties })
-		this.run(route.model(this.properties), { binding: this.properties.router.view.binding })
+		this.properties.router._path = link.path
+		this.properties.router._view = new View(match.parameters)
+		this.properties.router.view.binding = new match.route.binding({ ...this.properties, ...match.route.properties, ...link.properties })
+		this.run(match.route.model(this.properties), { parentNode: this.identifier.view, binding: this.properties.router.view.binding })
 	}
 
 }
