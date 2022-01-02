@@ -12,12 +12,13 @@ class Route {
 	 * @param {object}   properties
 	 * @param {function} middleware
 	 */
-	constructor(match, model, binding = Binding, properties = {}, middleware) {
+	constructor({ match, model, binding = Binding, properties = {}, middleware, layout } = {}) {
 		this._match = match
 		this._model = model
 		this._binding = binding
 		this._properties = properties
 		this._middleware = middleware
+		this._layout = layout
 	}
 
 	/**
@@ -58,6 +59,14 @@ class Route {
 	 */
 	get middleware() {
 		return this._middleware
+	}
+
+	/**
+	 * @readonly
+	 * @type {type}
+	 */
+	get layout() {
+		return this._layout
 	}
 
 }

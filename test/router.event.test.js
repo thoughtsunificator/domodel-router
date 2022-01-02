@@ -33,7 +33,10 @@ describe("router.event", () => {
 	})
 
 	it("navigatePathName", (done) => {
-		const router = new Router([], Router.TYPE.PATHNAME)
+		const router = new Router({
+			routes: [],
+			type: Router.TYPE.PATHNAME
+		})
 		const binding = new RouterBinding({ router })
 		const link = new Link("/pathname")
 		rootBinding.run(RouterModel, { binding })
@@ -46,7 +49,10 @@ describe("router.event", () => {
 	})
 
 	it("navigateHash", (done) => {
-		const router = new Router([], Router.TYPE.HASH)
+		const router = new Router({
+			routes: [],
+			type: Router.TYPE.HASH
+		})
 		const binding = new RouterBinding({ router })
 		const link = new Link("/virtual")
 		rootBinding.run(RouterModel, { binding })
@@ -63,12 +69,28 @@ describe("router.event", () => {
 			tagName: "div"
 		})
 		const routes = [
-			new Route("/", model, Binding),
-			new Route("/cxzcxz", model, Binding),
-			new Route("/gfgfd", model, Binding),
-			new Route("/ytrzxxdsa/bcvcb", model, Binding),
+			new Route({
+				match: "/",
+				model,
+				binding: Binding
+			}),
+			new Route({
+				match: "/cxzcxz",
+				model,
+				binding: Binding
+			}),
+			new Route({
+				match: "/gfgfd",
+				model,
+				binding: Binding
+			}),
+			new Route({
+				match: "/ytrzxxdsa/bcvcb",
+				model,
+				binding: Binding
+			}),
 		]
-		const router = new Router(routes)
+		const router = new Router({ routes })
 		const binding = new RouterBinding({ router })
 		const link = new Link("/ytrzxxdsa/bcvcb", { test: "abc" })
 		rootBinding.run(RouterModel, { binding })
@@ -88,14 +110,27 @@ describe("router.event", () => {
 			tagName: "div"
 		})
 		const routes = [
-			new Route("/", model, Binding),
-			new Route("/unauthorized", model, Binding),
-			new Route("/protected", model, Binding, {}, (properties) => {
-				properties.router.emit("browse", new Link("/unauthorized", { redirected: true }))
-				return true
+			new Route({
+				match: "/",
+				model,
+				binding: Binding
+			}),
+			new Route({
+				match: "/unauthorized",
+				model,
+				binding: Binding
+			}),
+			new Route({
+				match: "/protected",
+				model,
+				binding: Binding,
+				middleware: (properties) => {
+					properties.router.emit("browse", new Link("/unauthorized", { redirected: true }))
+					return true
+				}
 			}),
 		]
-		const router = new Router(routes)
+		const router = new Router({ routes })
 		const binding = new RouterBinding({ router })
 		const link = new Link("/protected")
 		rootBinding.run(RouterModel, { binding })
@@ -138,6 +173,10 @@ describe("router.event", () => {
 					assert.strictEqual(this.properties.b, "c")
 					assert.strictEqual(router.view.parameters.text, 4)
 					done()
+				} else if(index === 4) {
+					done()
+				} else if(index === 3) {
+					done()
 				}
 				index++
 			}
@@ -147,17 +186,92 @@ describe("router.event", () => {
 			}
 		}
 		const routes = [
-			new Route("/", data => ({ tagName: "div", textContent: data.router.view.parameters.text }), MyBinding),
-			new Route("/cxzcxz", data => ({ tagName: "div", textContent: data.router.view.parameters.text }), MyBinding, { myRouteProperty: "hello" }),
-			new Route("/gfgfd", data => ({ tagName: "div", textContent: data.router.view.parameters.text }), MyBinding),
-			new Route("/ytrzxxdsa/bcvcb", data => ({ tagName: "div", textContent: data.router.view.parameters.text }), MyBinding),
+			new Route({
+				match: "/",
+				model: data => ({ tagName: "div", textContent: data.router.view.parameters.text }),
+				binding: MyBinding
+			}),
+			new Route({
+				match: "/cxzcxz",
+				model: data => ({ tagName: "div", textContent: data.router.view.parameters.text }),
+				binding: MyBinding,
+				properties: { myRouteProperty: "hello" }
+			}),
+			new Route({
+				match: "/gfgfd",
+				model: data => ({ tagName: "div", textContent: data.router.view.parameters.text }),
+				binding: MyBinding
+			}),
+			new Route({
+				match: "/ytrzxxdsa/bcvcb",
+				model: data => ({ tagName: "div", textContent: data.router.view.parameters.text }),
+				binding: MyBinding
+			}),
 		]
-		const router = new Router(routes)
+		const router = new Router({ routes })
 		const binding = new RouterBinding({ router })
 		rootBinding.run(RouterModel, { binding })
 		router.emit("routeSet", { match: new Match(routes[1], { text: 2 }), link: new Link("/cxzcxz") })
 		router.emit("routeSet", { match: new Match(routes[2], { text: 3 }), link: new Link("/gfgfd", { a: "b" }) })
 		router.emit("routeSet", { match: new Match(routes[3], { text: 4 }), link: new Link("/ytrzxxdsa/bcvcb", { b: "c" }) })
+	})
+
+	it("routeSet layout", () => {
+		const routes = [
+			new Route({
+				match: "/test1",
+				model: () => ({ tagName: "div", textContent: "Test" }),
+				binding: Binding,
+				layout: data => ({ tagName: "div", textContent: "Test1", children: [ data ] })
+			}),
+			new Route({
+				match: "/test2",
+				model: () => ({ tagName: "div", textContent: "Test" }),
+				binding: Binding,
+				layout: data => ({ tagName: "div", textContent: "Test2", children: [ data ] })
+			}),
+			new Route({
+				match: "/test3",
+				model: () => ({ tagName: "div", textContent: "Test" }),
+				binding: Binding
+			}),
+		]
+		const router = new Router({ routes })
+		const binding = new RouterBinding({ router })
+		rootBinding.run(RouterModel, { binding })
+		router.emit("routeSet", { match: new Match(routes[0]), link: new Link("/test1") })
+		assert.strictEqual(binding.root.innerHTML, "<div>Test1<div>Test</div></div>")
+		router.emit("routeSet", { match: new Match(routes[1]), link: new Link("/test2") })
+		assert.strictEqual(binding.root.innerHTML, "<div>Test2<div>Test</div></div>")
+		router.emit("routeSet", { match: new Match(routes[2]), link: new Link("/test3") })
+		assert.strictEqual(binding.root.innerHTML, "<div>Test</div>")
+	})
+
+	it("routeSet defaultLayout", () => {
+		const routes = [
+			new Route({
+				match: "/test1",
+				model: () => ({ tagName: "div", textContent: "Test" }),
+				binding: Binding,
+				layout: data => ({ tagName: "div", textContent: "Test1", children: [ data ] })
+			}),
+			new Route({
+				match: "/test2",
+				model: () => ({ tagName: "div", textContent: "Test" }),
+				binding: Binding
+			}),
+		]
+		const router = new Router({
+			routes,
+			type: Router.TYPE.VIRTUAL,
+			defaultLayout: data => ({ tagName: "div", textContent: "Test2", children: [ data ] })
+		})
+		const binding = new RouterBinding({ router })
+		rootBinding.run(RouterModel, { binding })
+		router.emit("routeSet", { match: new Match(routes[0]), link: new Link("/test1") })
+		assert.strictEqual(binding.root.innerHTML, "<div>Test1<div>Test</div></div>")
+		router.emit("routeSet", { match: new Match(routes[1]), link: new Link("/test2") })
+		assert.strictEqual(binding.root.innerHTML, "<div>Test2<div>Test</div></div>")
 	})
 
 })

@@ -55,7 +55,13 @@ class RouterEventListener extends EventListener {
 		this.properties.router._path = link.path
 		this.properties.router._view = new View(match.parameters)
 		this.properties.router.view.binding = new match.route.binding({ ...this.properties, ...match.route.properties, ...link.properties })
-		this.run(match.route.model(this.properties), { parentNode: this.identifier.view, binding: this.properties.router.view.binding })
+		let model = match.route.model(this.properties)
+		if(match.route.layout) {
+			model = match.route.layout(model)
+		} else if(this.properties.router.defaultLayout) {
+			model = this.properties.router.defaultLayout(model)
+		}
+		this.run(model, { parentNode: this.identifier.view, binding: this.properties.router.view.binding })
 	}
 
 }

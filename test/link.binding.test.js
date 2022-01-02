@@ -32,7 +32,10 @@ describe("link.binding", () => {
 
 	it("onCreatedVirtual", () => {
 		const link = new Link("/test1")
-		const router = new Router(routes, Router.TYPE.VIRTUAL)
+		const router = new Router({
+			routes,
+			type: Router.TYPE.VIRTUAL
+		})
 		const binding = new LinkBinding({ link, router })
 		rootBinding.run(LinkModel(), { binding })
 		assert.strictEqual(binding.root.href, "")
@@ -40,7 +43,10 @@ describe("link.binding", () => {
 
 	it("onCreatedPathName", () => {
 		const link = new Link("/test2")
-		const router = new Router(routes, Router.TYPE.PATHNAME)
+		const router = new Router({
+			routes,
+			type: Router.TYPE.PATHNAME
+		})
 		const binding = new LinkBinding({ link, router })
 		rootBinding.run(LinkModel(), { binding })
 		assert.strictEqual(binding.root.href, "https://localhost/test2")
@@ -48,14 +54,20 @@ describe("link.binding", () => {
 
 	it("onCreatedHash", () => {
 		const link = new Link("/test3")
-		const router = new Router(routes, Router.TYPE.HASH)
+		const router = new Router({
+			routes,
+			type: Router.TYPE.HASH
+		})
 		const binding = new LinkBinding({ link, router })
 		rootBinding.run(LinkModel(), { binding })
 		assert.strictEqual(binding.root.href, "https://localhost/#/test3")
 	})
 
 	it("clickVirtual", (done) => {
-		const router = new Router(routes, Router.TYPE.VIRTUAL)
+		const router = new Router({
+			routes,
+			type: Router.TYPE.VIRTUAL
+		})
 		rootBinding.listen(router, "browse", link => {
 			assert.strictEqual(link.path, "/virtual")
 			done()
@@ -67,7 +79,10 @@ describe("link.binding", () => {
 	})
 
 	it("clickPathName", (done) => {
-		const router = new Router(routes, Router.TYPE.PATHNAME)
+		const router = new Router({
+			routes,
+			type: Router.TYPE.PATHNAME
+		})
 		rootBinding.listen(router, "navigate", link => {
 			assert.strictEqual(link.path, "/pathname")
 			done()
@@ -79,7 +94,10 @@ describe("link.binding", () => {
 	})
 
 	it("clickHash", (done) => {
-		const router = new Router(routes, Router.TYPE.HASH)
+		const router = new Router({
+			routes,
+			type: Router.TYPE.HASH
+		})
 		rootBinding.listen(router, "navigate", link => {
 			assert.strictEqual(link.path, "/hash")
 			done()
