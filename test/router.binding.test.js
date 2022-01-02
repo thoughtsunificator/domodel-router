@@ -32,14 +32,18 @@ describe("router.binding", () => {
 	})
 
 	it("onCreated", () => {
-		const router = new Router([])
+		const router = new Router({ routes: [] })
 		const binding = new RouterBinding({ router })
 		rootBinding.run(RouterModel, { binding })
 		assert.strictEqual(binding.identifier.view.className, "router")
 	})
 
 	it("onCreatedVirtual", (done) => {
-		const router = new Router([], Router.TYPE.VIRTUAL, null, "/virtual")
+		const router = new Router({
+			routes: [],
+			type: Router.TYPE.VIRTUAL,
+			initialPath: "/virtual"
+		})
 		const binding = new RouterBinding({ router })
 		binding.listen(router, "browse", link => {
 			assert.strictEqual(link.path, "/virtual")
@@ -50,7 +54,11 @@ describe("router.binding", () => {
 	})
 
 	it("onCreatedPathNameInitial", (done) => {
-		const router = new Router([], Router.TYPE.PATHNAME, null, "/pathname")
+		const router = new Router({
+			routes: [],
+			type: Router.TYPE.PATHNAME,
+			initialPath: "/pathname"
+		})
 		const binding = new RouterBinding({ router })
 		binding.listen(router, "browse", link => {
 			assert.strictEqual(link.path, "/pathname")
@@ -61,7 +69,10 @@ describe("router.binding", () => {
 	})
 
 	it("onCreatedPathName", (done) => {
-		const router = new Router([], Router.TYPE.PATHNAME, null)
+		const router = new Router({
+			routes: [],
+			type: Router.TYPE.PATHNAME
+		})
 		const binding = new RouterBinding({ router })
 		virtualDOM.reconfigure({ url: `${url}/pathname` })
 		binding.listen(router, "browse", link => {
@@ -73,7 +84,11 @@ describe("router.binding", () => {
 	})
 
 	it("onCreatedHashInitial", (done) => {
-		const router = new Router([], Router.TYPE.HASH, null, "/hash")
+		const router = new Router({
+			routes: [],
+			type: Router.TYPE.HASH,
+			initialPath: "/hash"
+		})
 		const binding = new RouterBinding({ router })
 		binding.listen(router, "navigate", link => {
 			assert.strictEqual(link.path, "/hash")
@@ -84,7 +99,10 @@ describe("router.binding", () => {
 	})
 
 	it("onCreatedHash", (done) => {
-		const router = new Router([], Router.TYPE.HASH, null)
+		const router = new Router({
+			routes: [],
+			type: Router.TYPE.HASH
+		})
 		const binding = new RouterBinding({ router })
 		virtualDOM.reconfigure({ url: `${url}/#/hash` })
 		binding.listen(router, "browse", link => {
@@ -96,7 +114,11 @@ describe("router.binding", () => {
 	})
 
 	it("onCreatedInitialPathNull", () => {
-		const router = new Router([], Router.TYPE.VIRTUAL, null, null)
+		const router = new Router({
+			routes: [],
+			type: Router.TYPE.VIRTUAL,
+			initialPath: null
+		})
 		const binding = new RouterBinding({ router })
 		rootBinding.run(RouterModel, { binding })
 		assert.strictEqual(router.view, null)
@@ -104,7 +126,10 @@ describe("router.binding", () => {
 	})
 
 	it("popStatePathName", (done) => {
-		const router = new Router([], Router.TYPE.PATHNAME)
+		const router = new Router({
+			routes: [],
+			type: Router.TYPE.PATHNAME
+		})
 		const binding = new RouterBinding({ router })
 		rootBinding.run(RouterModel, { binding })
 		binding.listen(router, "browse", link => {
@@ -117,7 +142,10 @@ describe("router.binding", () => {
 	})
 
 	it("popStateHash", (done) => {
-		const router = new Router([], Router.TYPE.HASH)
+		const router = new Router({
+			routes: [],
+			type: Router.TYPE.HASH
+		})
 		const binding = new RouterBinding({ router })
 		rootBinding.run(RouterModel, { binding })
 		let index = 0

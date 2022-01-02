@@ -9,7 +9,13 @@ describe("route", () => {
 		const model = { tagName: "div" }
 		const middleware = () => {}
 		const properties = {}
-		const route = new Route("/test", model, Binding, properties, middleware)
+		const route = new Route({
+			match: "/test",
+			model,
+			binding: Binding,
+			properties,
+			middleware
+		})
 		assert.strictEqual(route.match, "/test")
 		assert.deepEqual(route.model, model)
 		assert.deepEqual(route.properties, properties)

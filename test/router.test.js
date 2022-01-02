@@ -12,12 +12,36 @@ const model = {
 }
 
 const routes = [
-	new Route("/", model, Binding),
-	new Route("/test1", model, Binding),
-	new Route("/cxzcxz", model, Binding),
-	new Route("/xvcdgs/{myprop}", model, Binding),
-	new Route("/test1/dsadsa", model, Binding),
-	new Route("/{propA}/test", model, Binding),
+	new Route({
+		match: "/",
+		model,
+		binding: Binding
+	}),
+	new Route({
+		match: "/test1",
+		model,
+		binding: Binding
+	}),
+	new Route({
+		match: "/cxzcxz",
+		model,
+		binding: Binding
+	}),
+	new Route({
+		match: "/xvcdgs/{myprop}",
+		model,
+		binding: Binding
+	}),
+	new Route({
+		match: "/test1/dsadsa",
+		model,
+		binding: Binding
+	}),
+	new Route({
+		match: "/{propA}/test",
+		model,
+		binding: Binding
+	}),
 ]
 
 describe("router", () => {
@@ -29,7 +53,7 @@ describe("router", () => {
 	})
 
 	it("instance", () => {
-		const router = new Router([])
+		const router = new Router({ routes: [] })
 		assert.deepEqual(router.routes, [])
 		assert.strictEqual(router.type, Router.TYPE.VIRTUAL)
 		assert.ok(router.errorRoute instanceof Route)
@@ -44,17 +68,37 @@ describe("router", () => {
 			route.errorRoute = 1
 			route.initialPath = 1
 		})
-		const router_ = new Router([], Router.TYPE.PATHNAME)
+		const router_ = new Router({
+			routes: [],
+			type: Router.TYPE.PATHNAME
+		})
 		assert.strictEqual(router_.type, Router.TYPE.PATHNAME)
-		const router__ = new Router([], Router.TYPE.PATHNAME, { model: 1 })
-		assert.strictEqual(router__.errorRoute.model, 1)
-		const router___ = new Router([], Router.TYPE.PATHNAME, null, "/test")
+		const errorModel = { tagName: "div" }
+		const router__ = new Router({
+			routes: [],
+			type: Router.TYPE.PATHNAME,
+			errorRoute: new Route({
+				model: errorModel
+			})
+		})
+		assert.strictEqual(router__.errorRoute.model, errorModel)
+		const router___ = new Router({
+			routes: [],
+			type: Router.TYPE.PATHNAME,
+			initialPath: "/test"
+		})
 		assert.strictEqual(router___.initialPath, "/test")
-		assert.strictEqual(new Router([], Router.TYPE.VIRTUAL, null, "/").errorRoute.model, ErrorModel)
+		assert.strictEqual(new Router({
+			routes: [],
+			type: Router.TYPE.VIRTUAL,
+			initialPath: "/"
+		}).errorRoute.model, ErrorModel)
 	})
 
 	it("match", () => {
-		const router = new Router(routes)
+		const router = new Router({
+			routes
+		})
 		assert.ok(router.match("/") instanceof Match)
 		assert.strictEqual(router.match("/").route, routes[0])
 		assert.strictEqual(router.match("/test1").route, routes[1])
