@@ -31,7 +31,7 @@ class RouterEventListener extends EventListener {
 	browse(link) {
 		const match = this.properties.router.match(link.path)
 		if(match) {
-			if(match.route.middleware && match.route.middleware(this.properties.router)) {
+			if(match.route.middleware && match.route.middleware(this.properties)) {
 				return
 			}
 			this.properties.router.emit("routeSet", { match, link })
