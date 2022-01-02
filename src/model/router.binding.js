@@ -54,6 +54,22 @@ class RouterBinding extends Binding {
 		}
 	}
 
+	/**
+	 * @readonly
+	 * @type {string}
+	 */
+	get path() {
+		return this._path
+	}
+
+	/**
+	 * @readonly
+	 * @type {View}
+	 */
+	get view() {
+		return this._view
+	}
+
 }
 
 export default RouterBinding
