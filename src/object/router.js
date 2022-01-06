@@ -1,4 +1,4 @@
-import { Observable, Binding } from "domodel"
+import { Observable, Binding, Model } from "domodel"
 import { Tokenizer, Token } from "@thoughtsunificator/route-tokenizer"
 
 import Route from "./route.js"
@@ -34,8 +34,7 @@ class Router extends Observable {
 		this._routes = routes
 		this._type = type
 		this._errorRoute = errorRoute || new Route({
-			model: ErrorModel,
-			binding: Binding
+			model: new Model(ErrorModel)
 		})
 		this._initialPath = initialPath
 		this._view = null

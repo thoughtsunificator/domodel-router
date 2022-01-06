@@ -1,6 +1,6 @@
 import assert from "assert"
 import { JSDOM } from "jsdom"
-import { Core, Binding, EventListener } from "domodel"
+import { Core, Binding, EventListener, Model } from "domodel"
 
 import RouterEventListener  from "../src/model/router.event.js"
 import { RouterModel, RouterBinding, Router, Route, Link, Match }  from "../index.js"
@@ -88,23 +88,19 @@ describe("router.event", () => {
 		const routes = [
 			new Route({
 				match: "/",
-				model,
-				binding: Binding
+				model: new Model(model, Binding)
 			}),
 			new Route({
 				match: "/cxzcxz",
-				model,
-				binding: Binding
+				model: new Model(model, Binding)
 			}),
 			new Route({
 				match: "/gfgfd",
-				model,
-				binding: Binding
+				model: new Model(model, Binding)
 			}),
 			new Route({
 				match: "/ytrzxxdsa/bcvcb",
-				model,
-				binding: Binding
+				model: new Model(model, Binding)
 			}),
 		]
 		const router = new Router({ routes })
@@ -129,18 +125,15 @@ describe("router.event", () => {
 		const routes = [
 			new Route({
 				match: "/",
-				model,
-				binding: Binding
+				model: new Model(model, Binding)
 			}),
 			new Route({
 				match: "/unauthorized",
-				model,
-				binding: Binding
+				model: new Model(model, Binding)
 			}),
 			new Route({
 				match: "/protected",
-				model,
-				binding: Binding,
+				model: new Model(model, Binding),
 				middleware: (properties) => {
 					properties.router.emit("browse", new Link("/unauthorized", { redirected: true }))
 					return true
@@ -205,24 +198,19 @@ describe("router.event", () => {
 		const routes = [
 			new Route({
 				match: "/",
-				model: data => ({ tagName: "div", textContent: data.router.view.parameters.text }),
-				binding: MyBinding
+				model: new Model(data => ({ tagName: "div", textContent: data.router.view.parameters.text }), MyBinding),
 			}),
 			new Route({
 				match: "/cxzcxz",
-				model: data => ({ tagName: "div", textContent: data.router.view.parameters.text }),
-				binding: MyBinding,
-				properties: { myRouteProperty: "hello" }
+				model: new Model(data => ({ tagName: "div", textContent: data.router.view.parameters.text }), MyBinding, { myRouteProperty: "hello" }),
 			}),
 			new Route({
 				match: "/gfgfd",
-				model: data => ({ tagName: "div", textContent: data.router.view.parameters.text }),
-				binding: MyBinding
+				model: new Model(data => ({ tagName: "div", textContent: data.router.view.parameters.text }), MyBinding),
 			}),
 			new Route({
 				match: "/ytrzxxdsa/bcvcb",
-				model: data => ({ tagName: "div", textContent: data.router.view.parameters.text }),
-				binding: MyBinding
+				model: new Model(data => ({ tagName: "div", textContent: data.router.view.parameters.text }), MyBinding),
 			}),
 		]
 		const router = new Router({ routes })
@@ -242,26 +230,17 @@ describe("router.event", () => {
 		const routes = [
 			new Route({
 				match: "/test1",
-				model: () => ({ tagName: "div", textContent: "Test" }),
-				binding: Binding,
-				layout: {
-					model: { tagName: "div", textContent: "Test1", identifier: "view" },
-					binding: Binding
-				}
+				model: new Model(() => ({ tagName: "div", textContent: "Test" }), Binding),
+				layout: new Model({ tagName: "div", textContent: "Test1", identifier: "view" }, Binding)
 			}),
 			new Route({
 				match: "/test2",
-				model: () => ({ tagName: "div", textContent: "Test" }),
-				binding: Binding,
-				layout: {
-					model: { tagName: "div", textContent: "Test2", identifier: "view" },
-					binding: myBinding
-				}
+				model: new Model(() => ({ tagName: "div", textContent: "Test" }), Binding),
+				layout: new Model({ tagName: "div", textContent: "Test2", identifier: "view" }, myBinding)
 			}),
 			new Route({
 				match: "/test3",
-				model: () => ({ tagName: "div", textContent: "Test" }),
-				binding: Binding
+				model: new Model(() => ({ tagName: "div", textContent: "Test" }), Binding),
 			}),
 		]
 		const router = new Router({ routes })
@@ -284,26 +263,18 @@ describe("router.event", () => {
 		const routes = [
 			new Route({
 				match: "/test1",
-				model: () => ({ tagName: "div", textContent: "Test" }),
-				binding: Binding,
-				layout: {
-					model: { tagName: "div", textContent: "Test1", identifier: "view" },
-					binding: Binding
-				}
+				model: new Model(() => ({ tagName: "div", textContent: "Test" }), Binding),
+				layout: new Model({ tagName: "div", textContent: "Test1", identifier: "view" }, Binding)
 			}),
 			new Route({
 				match: "/test2",
-				model: () => ({ tagName: "div", textContent: "Test" }),
-				binding: Binding
+				model: new Model(() => ({ tagName: "div", textContent: "Test" }), Binding),
 			}),
 		]
 		const router = new Router({
 			routes,
 			type: Router.TYPE.VIRTUAL,
-			defaultLayout: {
-				model: { tagName: "div", textContent: "Test2", identifier: "view" },
-				binding: Binding
-			}
+			defaultLayout: new Model({ tagName: "div", textContent: "Test2", identifier: "view" }, Binding)
 		})
 		const binding = new RouterBinding({ router })
 		rootBinding.run(RouterModel, { binding })
