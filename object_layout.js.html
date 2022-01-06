@@ -3,7 +3,7 @@
 <head>
     
     <meta charset="utf-8">
-    <title>object/route.js - Documentation</title>
+    <title>object/layout.js - Documentation</title>
     
     
     <script src="scripts/prettify/prettify.js"></script>
@@ -34,7 +34,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">object/route.js</h1>
+    <h1 class="page-title">object/layout.js</h1>
     
 
     
@@ -44,60 +44,16 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import { Binding } from "domodel"
+            <pre class="prettyprint source linenums"><code>import { Observable } from "domodel"
 
 /**
  * @global
  */
-class Route {
-
-	/**
-	 * @param {string}   match
-	 * @param {Model}    model
-	 * @param {function} middleware
-	 */
-	constructor({ match, model, middleware, layout } = {}) {
-		this._match = match
-		this._model = model
-		this._middleware = middleware
-		this._layout = layout
-	}
-
-	/**
-	 * @readonly
-	 * @type {string}
-	 */
-	get match() {
-		return this._match
-	}
-
-	/**
-	 * @readonly
-	 * @type {Model}
-	 */
-	get model() {
-		return this._model
-	}
-
-	/**
-	 * @readonly
-	 * @type {function}
-	 */
-	get middleware() {
-		return this._middleware
-	}
-
-	/**
-	 * @readonly
-	 * @type {type}
-	 */
-	get layout() {
-		return this._layout
-	}
+class Layout extends Observable {
 
 }
 
-export default Route
+export default Layout
 </code></pre>
         </article>
     </section>
