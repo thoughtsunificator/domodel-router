@@ -15,7 +15,7 @@ URL routing system for [domodel](https://github.com/thoughtsunificator/domodel).
 ## Usage
 
 ```javascript
-import { Core } from "domodel"
+import { Core, Model } from "domodel"
 import { Router, Route, RouterModel, RouterBinding } from "@domodel/router"
 
 import MyViewModel from "/model/my-view.js"
@@ -25,13 +25,22 @@ import MyViewBinding from "/model/my-view.binding.js"
 import MyView2Binding from "/model/my-view2.binding.js"
 
 const routes = [
-  new Route("/", MyViewModel, MyViewBinding),
-  new Route("/test", MyViewModel2, MyView2Binding)
+  new Route({
+    match: "/", 
+    model: new Model(MyViewModel, MyViewBinding)
+  }),
+  new Route({
+    match: "/test", 
+    model: new Model(MyViewModel2, MyView2Binding)
+  })
 ]
 
 window.addEventListener("load", function() {
 
-  const router = new Router(routes, Router.TYPE.HASH)
+  const router = new Router({
+    routes, 
+    type: Router.TYPE.HASH
+  })
 
   Core.run(RouterModel, {
     binding: new RouterBinding({ router }),
