@@ -19,7 +19,7 @@ class RouterEventListener extends EventListener {
 		if(this.properties.router.type === Router.TYPE.HASH) {
 			path = `#${link.path}`
 		}
-		this.root.ownerDocument.defaultView.history.pushState({}, null, path)
+		this.root.ownerDocument.defaultView.history.pushState({}, null, `${this.properties.router.basePath}${path}`)
 		this.properties.router.emit("browse", link)
 	}
 
@@ -50,18 +50,29 @@ class RouterEventListener extends EventListener {
 	routeSet(data) {
 		const { match, link } = data
 		if(this.properties.router.view !== null) {
-			this.properties.router.view.binding.remove()
+			if(this.layoutBinding) {
+				this.layoutBinding.remove()
+				this._layoutBinding = null
+			} else {
+				this.properties.router.view.binding.remove()
+			}
 		}
 		this.properties.router._path = link.path
 		this.properties.router._view = new View(match.parameters)
-		this.properties.router.view.binding = new match.route.binding({ ...this.properties, ...match.route.properties, ...link.properties })
-		let model = match.route.model(this.properties)
+		this.properties.router.view.binding = new match.route.model.binding({ ...this.properties, ...match.route.model.properties, ...link.properties })
+		let model = match.route.model.definition(this.properties)
+		let layoutBinding = this
 		if(match.route.layout) {
-			model = match.route.layout(model)
+			layoutBinding = new match.route.layout.binding(match.route.layout.properties)
+			this.run(match.route.layout.definition, { binding: layoutBinding })
 		} else if(this.properties.router.defaultLayout) {
-			model = this.properties.router.defaultLayout(model)
+			layoutBinding = new this.properties.router.defaultLayout.binding(this.properties.router.defaultLayout.properties)
+			this.run(this.properties.router.defaultLayout.definition, { binding: layoutBinding })
 		}
-		this.run(model, { parentNode: this.identifier.view, binding: this.properties.router.view.binding })
+		if(layoutBinding !== this) {
+			this._layoutBinding = layoutBinding
+		}
+		layoutBinding.run(model, { parentNode: layoutBinding.identifier.view, binding: this.properties.router.view.binding })
 	}
 
 }

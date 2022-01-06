@@ -7,16 +7,12 @@ class Route {
 
 	/**
 	 * @param {string}   match
-	 * @param {model}    model
-	 * @param {Binding}  binding
-	 * @param {object}   properties
+	 * @param {Model}    model
 	 * @param {function} middleware
 	 */
-	constructor({ match, model, binding = Binding, properties = {}, middleware, layout } = {}) {
+	constructor({ match, model, middleware, layout } = {}) {
 		this._match = match
 		this._model = model
-		this._binding = binding
-		this._properties = properties
 		this._middleware = middleware
 		this._layout = layout
 	}
@@ -31,26 +27,10 @@ class Route {
 
 	/**
 	 * @readonly
-	 * @type {object}
+	 * @type {Model}
 	 */
 	get model() {
 		return this._model
-	}
-
-	/**
-	 * @readonly
-	 * @type {Binding}
-	 */
-	get binding() {
-		return this._binding
-	}
-
-	/**
-	 * @readonly
-	 * @type {object}
-	 */
-	get properties() {
-		return this._properties
 	}
 
 	/**

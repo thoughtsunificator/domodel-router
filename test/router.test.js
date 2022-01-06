@@ -1,5 +1,5 @@
 import assert from "assert"
-import { Binding, Observable } from "domodel"
+import { Binding, Observable, Model } from "domodel"
 
 import { Router, Route, Match } from "../index.js"
 
@@ -7,40 +7,34 @@ import ErrorModel from "../src/model/error.js"
 
 const url = "https://localhost/"
 
-const model = {
+const MyModel = {
 	tagName: "div"
 }
 
 const routes = [
 	new Route({
 		match: "/",
-		model,
-		binding: Binding
+		model: new Model(MyModel),
 	}),
 	new Route({
 		match: "/test1",
-		model,
-		binding: Binding
+		model: new Model(MyModel),
 	}),
 	new Route({
 		match: "/cxzcxz",
-		model,
-		binding: Binding
+		model: new Model(MyModel),
 	}),
 	new Route({
 		match: "/xvcdgs/{myprop}",
-		model,
-		binding: Binding
+		model: new Model(MyModel),
 	}),
 	new Route({
 		match: "/test1/dsadsa",
-		model,
-		binding: Binding
+		model: new Model(MyModel),
 	}),
 	new Route({
 		match: "/{propA}/test",
-		model,
-		binding: Binding
+		model: new Model(MyModel),
 	}),
 ]
 
@@ -57,7 +51,7 @@ describe("router", () => {
 		assert.deepEqual(router.routes, [])
 		assert.strictEqual(router.type, Router.TYPE.VIRTUAL)
 		assert.ok(router.errorRoute instanceof Route)
-		assert.strictEqual(router.errorRoute.model, ErrorModel)
+		assert.strictEqual(router.errorRoute.model.definition, ErrorModel)
 		assert.strictEqual(router.initialPath, "/")
 		assert.strictEqual(router.path, null)
 		assert.ok(Router.prototype instanceof Observable)
@@ -67,6 +61,8 @@ describe("router", () => {
 			route.type = 1
 			route.errorRoute = 1
 			route.initialPath = 1
+			route.defaultLayout = 1
+			route.basePath = 1
 		})
 		const router_ = new Router({
 			routes: [],
@@ -78,10 +74,12 @@ describe("router", () => {
 			routes: [],
 			type: Router.TYPE.PATHNAME,
 			errorRoute: new Route({
-				model: errorModel
-			})
+				model: new Model(errorModel)
+			}),
+			basePath: "/test"
 		})
-		assert.strictEqual(router__.errorRoute.model, errorModel)
+		assert.strictEqual(router__.errorRoute.model.definition, errorModel)
+		assert.strictEqual(router__.basePath, "/test")
 		const router___ = new Router({
 			routes: [],
 			type: Router.TYPE.PATHNAME,
@@ -92,7 +90,7 @@ describe("router", () => {
 			routes: [],
 			type: Router.TYPE.VIRTUAL,
 			initialPath: "/"
-		}).errorRoute.model, ErrorModel)
+		}).errorRoute.model.definition, ErrorModel)
 	})
 
 	it("match", () => {

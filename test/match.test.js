@@ -1,15 +1,18 @@
 import assert from "assert"
-import { Binding } from "domodel"
+import { Binding, Model } from "domodel"
 import { Match, Route } from "../index.js"
 
-const Model = {
+const MyModel = {
 	tagName: "div"
 }
 
 describe("match", () => {
 
 	it("instance", () => {
-		const route = new Route("/test/{a}/{b}", Model, Binding)
+		const route = new Route({
+			match: "/test/{a}/{b}",
+			model: new Model(MyModel)
+		})
 		const match = new Match(route, { a: "1cxz2", b: "dsadsa" })
 		assert.strictEqual(match.route, route)
 		assert.strictEqual(match.parameters.a, "1cxz2")

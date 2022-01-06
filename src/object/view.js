@@ -6,7 +6,6 @@ import { Observable } from "domodel"
 class View extends Observable {
 
 	/**
-	 * @param {Binding} binding
 	 * @param {object} [parameters={}]
 	 */
 	constructor(parameters = {}) {

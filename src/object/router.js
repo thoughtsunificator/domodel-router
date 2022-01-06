@@ -1,4 +1,4 @@
-import { Observable, Binding } from "domodel"
+import { Observable, Binding, Model } from "domodel"
 import { Tokenizer, Token } from "@thoughtsunificator/route-tokenizer"
 
 import Route from "./route.js"
@@ -29,18 +29,18 @@ class Router extends Observable {
 	 * @param {Route}      errorRoute
 	 * @param {string}     initialPath
 	 */
-	constructor({ routes, type = Router.TYPE.VIRTUAL, errorRoute, initialPath = "/", defaultLayout } = {}) {
+	constructor({ routes, type = Router.TYPE.VIRTUAL, errorRoute, initialPath = "/", defaultLayout, basePath = "" } = {}) {
 		super()
 		this._routes = routes
 		this._type = type
 		this._errorRoute = errorRoute || new Route({
-			model: ErrorModel,
-			binding: Binding
+			model: new Model(ErrorModel)
 		})
 		this._initialPath = initialPath
 		this._view = null
 		this._path = null
 		this._defaultLayout = defaultLayout
+		this._basePath = basePath
 	}
 
 	/**
@@ -131,10 +131,18 @@ class Router extends Observable {
 
 	/**
 	 * @readonly
-	 * @type {type}
+	 * @type {Model}
 	 */
 	get defaultLayout() {
 		return this._defaultLayout
+	}
+
+	/**
+	 * @readonly
+	 * @type {string}
+	 */
+	get basePath() {
+		return this._basePath
 	}
 
 }
