@@ -60,7 +60,7 @@ class RouterEventListener extends EventListener {
 		this.properties.router._path = link.path
 		this.properties.router._view = new View(match.parameters)
 		this.properties.router.view.binding = new match.route.model.binding({ ...this.properties, ...match.route.model.properties, ...link.properties })
-		let model = match.route.model.definition(this.properties)
+		let model = match.route.model.definition({ ...this.properties, ...match.route.model.properties, ...link.properties })
 		let layoutBinding = this
 		if(match.route.layout) {
 			layoutBinding = new match.route.layout.binding(match.route.layout.properties)
