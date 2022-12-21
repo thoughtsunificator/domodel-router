@@ -81,41 +81,81 @@ describe("router.event", () => {
 		router.emit("navigate", link)
 	})
 
-	it("browse", (done) => {
-		const model = data => ({
-			tagName: "div"
+	describe("browse", () => {
+		it("without properties", done => {
+			const model = data => ({
+				tagName: "div"
+			})
+			const routes = [
+				new Route({
+					match: "/",
+					model: new Model(model, Binding)
+				}),
+				new Route({
+					match: "/cxzcxz",
+					model: new Model(model, Binding)
+				}),
+				new Route({
+					match: "/gfgfd",
+					model: new Model(model, Binding)
+				}),
+				new Route({
+					match: "/ytrzxxdsa/bcvcb",
+					model: new Model(model, Binding)
+				}),
+			]
+			const router = new Router({ routes })
+			const binding = new RouterBinding({ router })
+			const link = new Link("/ytrzxxdsa/bcvcb", { test: "abc" })
+			rootBinding.run(RouterModel, { binding })
+			binding.listen(router, "routeSet", data => {
+				assert.ok(data.match instanceof Match)
+				assert.ok(data.link instanceof Link)
+				assert.deepEqual(data.link.properties.test, "abc")
+				assert.deepEqual(data.match.route, routes[3])
+				done()
+			})
+			router.emit("browse", link)
+			assert.strictEqual(router.path, link.path)
 		})
-		const routes = [
-			new Route({
-				match: "/",
-				model: new Model(model, Binding)
-			}),
-			new Route({
-				match: "/cxzcxz",
-				model: new Model(model, Binding)
-			}),
-			new Route({
-				match: "/gfgfd",
-				model: new Model(model, Binding)
-			}),
-			new Route({
-				match: "/ytrzxxdsa/bcvcb",
-				model: new Model(model, Binding)
-			}),
-		]
-		const router = new Router({ routes })
-		const binding = new RouterBinding({ router })
-		const link = new Link("/ytrzxxdsa/bcvcb", { test: "abc" })
-		rootBinding.run(RouterModel, { binding })
-		binding.listen(router, "routeSet", data => {
-			assert.ok(data.match instanceof Match)
-			assert.ok(data.link instanceof Link)
-			assert.deepEqual(data.link.properties.test, "abc")
-			assert.deepEqual(data.match.route, routes[3])
-			done()
+		it("with properties", done => {
+			const model = data => ({
+				tagName: "div",
+				data
+			})
+			const routes = [
+				new Route({
+					match: "/",
+					model: new Model(model, Binding)
+				}),
+				new Route({
+					match: "/cxzcxz",
+					model: new Model(model, Binding)
+				}),
+				new Route({
+					match: "/gfgfd",
+					model: new Model(model, Binding)
+				}),
+				new Route({
+					match: "/ytrzxxdsa/bcvcb",
+					model: new Model(model, Binding)
+				}),
+			]
+			const router = new Router({ routes })
+			const binding = new RouterBinding({ router })
+			const link = new Link("/ytrzxxdsa/bcvcb", { test: "abc" })
+			rootBinding.run(RouterModel, { binding })
+			binding.listen(router, "routeSet", data => {
+				assert.ok(data.match instanceof Match)
+				assert.ok(data.link instanceof Link)
+				assert.deepEqual(data.link.properties.test, "abc")
+				assert.deepEqual(data.match.route, routes[3])
+				assert.deepEqual(binding._children[0].root.data, { router, test: "abc" })
+				done()
+			})
+			router.emit("browse", link)
+			assert.strictEqual(router.path, link.path)
 		})
-		router.emit("browse", link)
-		assert.strictEqual(router.path, link.path)
 	})
 
 	it("browse middleware", () => {
@@ -184,8 +224,6 @@ describe("router.event", () => {
 					assert.strictEqual(router.view.parameters.text, 4)
 					done()
 				} else if(index === 4) {
-					done()
-				} else if(index === 3) {
 					done()
 				}
 				index++
